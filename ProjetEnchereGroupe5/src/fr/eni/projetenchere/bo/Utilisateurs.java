@@ -180,29 +180,4 @@ public class Utilisateurs {
 		this.prenom = prenom;
 	}
 
-
-	public Utilisateurs(String motDePasse, String newMotDePasse, String confirmMotDePasse) {
-		super();
-		this.motDePasse = motDePasse;
-		this.newMotDePasse = newMotDePasse;
-		this.confirmMotDePasse = confirmMotDePasse;
-			
-	}
-
-	public String getNewMotDePasse() {
-		return newMotDePasse;
-	}
-
-	public void setNewMotDePasse(String newMotDePasse) {
-		this.newMotDePasse = newMotDePasse;
-	}
-
-	public String getConfirmMotDePasse() {
-		return confirmMotDePasse;
-	}
-
-	public void setConfirmMotDePasse(String confirmMotDePasse) {
-		this.confirmMotDePasse = confirmMotDePasse;
-	}
-	
 }
