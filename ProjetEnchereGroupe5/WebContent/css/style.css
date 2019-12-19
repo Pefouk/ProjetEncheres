@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+/*Header */
+
+
+.nav-text {
+color: red; }
+
+
+/* Accueil */
+.row {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #4a47a3;
+	border: 1px solid #ddd;
+	background-color: #4a47a3;
+	border: 1px solid rgba(86, 61, 124, .2);
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+body {
+	background-color: #413c69;
+}
+
+h1, h2, h3 {
+	color: #f4b0c7;
+}
+
+a, label {
+	color: white;
+	text-color: white;
+}
+
+a:hover {
+	color: white;
+}
+
+.prenom {
+	color: white;
+	text-color: white;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #4a47a3;
+	border: 1px solid #ddd;
+	background-color: #4a47a3;
+	border: 1px solid rgba(86, 61, 124, .2);
+}
+
+/* Inscription */
+.inscription {
+	text-align: center;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	background-color: #ad62aa;
+	border-radius: 2% 2% 2% 2%;
+}
+
+.erreur {
+	text-align: center;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	background-color: red;
+}
+
+
+/* Profil */
+.bodyprofil {
+	background-color: #413c69;
+}
+/* .bgprofil { */
+/* 	background-color: ad62aa; */
+/* 	border: 2px; */
+/* 	border-style: solid; */
+/* 	border-color:4a47a3; */
+/* 	border-radius: 1% 1% 1% 1%; */
+/* 	margin: 20px; */
+/* 	margin-right: 40px; */
+/* 	margin-left: 40px; */
+/* 	padding: 20px; */
+/* } */
+.fieldset {
+	background-color: #ad62aa;
+	border: 20px;
+	border-radius: 1% 1% 1% 1%;
+	border-color: black;
+	margin-left: 600px;
+	margin-right: 600px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.btnmodif {
+	margin: 20px;
+}
+
+footer {
+	margin-top: auto;
+	width: 100%;
+	position: relative;
+	bottom: 0;
+}
