@@ -14,6 +14,8 @@ public class Utilisateurs {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
+	private String newMotDePasse;
+	private String confirmMotDePasse;
 	
 	
 	public Utilisateurs(int noUtilisateur, String pseudo, String nom, String email, String telephone, String rue,
@@ -177,4 +179,30 @@ public class Utilisateurs {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+
+	public Utilisateurs(String motDePasse, String newMotDePasse, String confirmMotDePasse) {
+		super();
+		this.motDePasse = motDePasse;
+		this.newMotDePasse = newMotDePasse;
+		this.confirmMotDePasse = confirmMotDePasse;
+			
+	}
+
+	public String getNewMotDePasse() {
+		return newMotDePasse;
+	}
+
+	public void setNewMotDePasse(String newMotDePasse) {
+		this.newMotDePasse = newMotDePasse;
+	}
+
+	public String getConfirmMotDePasse() {
+		return confirmMotDePasse;
+	}
+
+	public void setConfirmMotDePasse(String confirmMotDePasse) {
+		this.confirmMotDePasse = confirmMotDePasse;
+	}
+	
 }
