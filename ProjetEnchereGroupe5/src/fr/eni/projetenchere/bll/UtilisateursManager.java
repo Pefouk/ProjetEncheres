@@ -111,24 +111,24 @@ public class UtilisateursManager {
 			throw new BLLException("Numero de t�l�phone invalide ! il doit contenir que des chiffres ! 0008");
 		}
 		if (pseudo.length() > 30)
-			throw new BLLException("Pseudo trop long ! 0009");
+			throw new BLLException("Pseudo trop long ! 0019");
 		if (nom.length() > 30)
-			throw new BLLException("Nom trop long ! 0010");
+			throw new BLLException("Nom trop long ! 0110");
 		if (prenom.length() > 30)
-			throw new BLLException("Prenom trop long ! 0011");
+			throw new BLLException("Prenom trop long ! 0111");
 		if (email.length() > 50)
-			throw new BLLException("Email trop long ! 0012");
+			throw new BLLException("Email trop long ! 0112");
 		if (telephone.length() > 15)
-			throw new BLLException("Telephone trop long ! 0013");
+			throw new BLLException("Telephone trop long ! 0113");
 		if (rue.length() > 30)
-			throw new BLLException("Rue trop longue ! 0014");
+			throw new BLLException("Rue trop longue ! 0114");
 		if (codePostal.length() > 5)
-			throw new BLLException("Code postal invalide ! 0015");
+			throw new BLLException("Code postal invalide ! 0115");
 		if (ville.length() > 30)
-			throw new BLLException("Nom de ville trop grand ! 0016");
+			throw new BLLException("Nom de ville trop grand ! 0116");
 		try {
 			if (this.dao.pseudoOuEmailDejaPris(email, pseudo))
-				throw new BLLException("Pseudo ou email d�ja utilis� !");
+				throw new BLLException("Pseudo ou email déja utilisé !");
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
 		}
