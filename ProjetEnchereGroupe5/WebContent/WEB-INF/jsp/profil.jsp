@@ -13,7 +13,7 @@
 		<%@include file="../fragments/header.jsp" %>
 	</header>
 	<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
-		<form action="${pageContext.request.contextPath}/ModifierProfil" method="post">
+		<form action="${pageContext.request.contextPath}/ModifierProfil" method="get">
 		<label for="pseudo">Pseudo</label>
 			<input type="text" required name="pseudo" id="pseudo_id" class="form-control" placeholder="${utilisateur.getPseudo()}" aria-label="Username" aria-describedby="addon-wrapping" disabled>
   			<label for="nom">Nom</label>

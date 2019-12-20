@@ -12,6 +12,12 @@
 	<header>
 		<%@include file="../fragments/header.jsp" %>
 	</header>
+	<c:if test="${! empty erreurModif}">
+		<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 erreur">
+			<h1>${erreurModif}</h1>
+		</div>
+	</c:if>
+	<c:if test="${! empty utilisateur}">
 	<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
 		<form action="${pageContext.request.contextPath}/Profil" method="post">
 			<label for="pseudo">Pseudo</label>
@@ -42,6 +48,12 @@
   			<input type="submit" name="submit" class = "form-control" placeholder="Modifier" aria-label="Submit" aria-describedby="addon-wrapping" >
 		</form>
 	</div>
+	</c:if>
+	<c:if test="${empty utilisateur}">
+		<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 erreur">
+			<h1>Vous n'etes pas connecté !</h1>
+		</div>
+	</c:if>
 	<footer>
 		<%@include file="../fragments/footer.jsp" %>
 	</footer>

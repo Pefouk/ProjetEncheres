@@ -25,6 +25,7 @@ public class ServletModifierProfil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/modifierProfil.jsp");
+		request.getSession().setAttribute("errurModif", null);
 		rd.forward(request, response);
 	}
 	

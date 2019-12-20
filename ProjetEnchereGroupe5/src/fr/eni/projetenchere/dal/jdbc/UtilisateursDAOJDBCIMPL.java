@@ -17,7 +17,8 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 	private final String GETHASHMDP = "select mot_de_passe from utilisateurs where no_utilisateur = ?";
 	private final String UPDATEUSER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = convert(nvarchar(256),HASHBYTES('SHA2_256', ? ), 2) WHERE no_utilisateur = ?";
 	private final String UNIQUEUSER = "SELECT * FROM UTILISATEURS WHERE email = ? OR pseudo = ?";
-
+	private final String VERIFICATIONMOTDEPASSE = "select * from Utilisateurs where no_utilisateur=? AND mot_de_passe =  convert(varchar(256),HASHBYTES('SHA2_256', ? ),2)";
+	
 	@Override
 	public Utilisateurs createUtilisateur(Utilisateurs u) throws DALException {
 		ResultSet rs = null;
@@ -150,17 +151,22 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 
 	public boolean pseudoOuEmailDejaPris(String email, String pseudo) throws DALException {
 		ResultSet rs = null;
+		Boolean res = false;
+		int i = 0;
 
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement ps = con.prepareStatement(UNIQUEUSER)) {
 			ps.setString(1, email);
 			ps.setString(2, pseudo);
 			rs = ps.executeQuery();
-			if (rs.next())
-				return (true);
+			for (;rs.next(); i++) {
+				if (!email.equals(rs.getString("email")) && !pseudo.equals(rs.getString("pseudo")))
+					res = true;
+			}
+			if (i > 1)
+				res = true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DALException("Erreur lors de la verification de l'unicité du compte : 5002");
+			throw new DALException("Erreur lors de la verification de l'unicitÃ© du compte : 5002");
 		} finally {
 			try {
 				if (rs != null)
@@ -169,6 +175,30 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 				throw new DALException("Erreur lors de la fermeture de du resultset : 5001");
 			}
 		}
-		return (false);
+		return (res);
+	}
+	
+	public boolean verifierCompte(int noUtilisateur, String motDePasse) throws DALException {
+		ResultSet rs = null;
+		boolean res = false;
+		
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement ps = con.prepareStatement(VERIFICATIONMOTDEPASSE)) {
+			ps.setInt(1, noUtilisateur);
+			ps.setString(2, motDePasse);
+			rs = ps.executeQuery();
+			if (rs.next())
+				res = true;
+		} catch (Exception e) {
+			throw new DALException("Mot de passe invalide !");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				throw new DALException("Erreur lors de la fermeture de du resultset : 6001");
+			}
+		}
+		return res;
 	}
 }

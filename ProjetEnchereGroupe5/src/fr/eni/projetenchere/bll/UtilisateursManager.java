@@ -87,8 +87,8 @@ public class UtilisateursManager {
 	}
 	
 	
-	public Utilisateurs modifierUtilisateur (String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) throws BLLException {
+	public Utilisateurs modifierUtilisateur (int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, String verifMotDePasse, int credit, boolean administrateur, String motDePasseActuel) throws BLLException {
 		
 		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null || codePostal == null || ville == null || motDePasse == null)
 			throw new BLLException("Un des champs est vide ! 0010");
@@ -126,15 +126,19 @@ public class UtilisateursManager {
 			throw new BLLException("Code postal invalide ! 0115");
 		if (ville.length() > 30)
 			throw new BLLException("Nom de ville trop grand ! 0116");
+		if (!verifMotDePasse.equals(motDePasse))
+			throw new BLLException("Les mots de passes ne correspondent pas !");
 		try {
 			if (this.dao.pseudoOuEmailDejaPris(email, pseudo))
 				throw new BLLException("Pseudo ou email déja utilisé !");
+			if (!this.dao.verifierCompte(noUtilisateur, motDePasseActuel))
+				throw new BLLException("Mot de passe invalide !");
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
 		}
-		Utilisateurs u = new Utilisateurs(pseudo, nom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, prenom);
+		Utilisateurs u = new Utilisateurs(noUtilisateur, pseudo, nom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, prenom);
 		try {
-			u = this.dao.createUtilisateur(u);
+			u = this.dao.modifierUtilisateur(u);
 		} catch (DALException e) {
 			throw new BLLException(e);
 		}
