@@ -5,6 +5,15 @@ package fr.eni.projetenchere.bo;
 
 public class Categories {
 
+	/**
+	 * @{inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Categories [noCategorie=" + noCategorie + ", libelle=" + libelle + "]";
+	}
+
 	private int noCategorie;
 	private String libelle;
 

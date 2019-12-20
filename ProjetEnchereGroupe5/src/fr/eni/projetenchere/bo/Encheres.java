@@ -3,14 +3,24 @@
  */
 package fr.eni.projetenchere.bo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Encheres {
 
 	private Date dateEnchere;
 	private int montantEnchere;
-	private int noArticle;
+	private ArticlesVendus article;
 	private int noUtilisateur;
+
+	/**
+	 * @{inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Encheres [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", article=" + article
+				+ ", noUtilisateur=" + noUtilisateur + "]";
+	}
 
 	public Encheres() {}
 	
@@ -21,11 +31,11 @@ public class Encheres {
 		this.noUtilisateur = noUtilisateur;
 	}
 
-	public Encheres(Date dateEnchere, int montantEnchere, int noArticle, int noUtilisateur) {
+	public Encheres(Date dateEnchere, int montantEnchere, ArticlesVendus article, int noUtilisateur) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
-		this.noArticle = noArticle;
+		this.article = article;
 		this.noUtilisateur = noUtilisateur;
 	}
 
@@ -47,12 +57,12 @@ public class Encheres {
 		this.montantEnchere = montantEnchere;
 	}
 
-	public int getNoArticle() {
-		return noArticle;
+	public ArticlesVendus getArticle() {
+		return article;
 	}
 
-	public void setNoArticle(int noArticle) {
-		this.noArticle = noArticle;
+	public void setArticle(ArticlesVendus article) {
+		this.article = article;
 	}
 	
 	public int getNoUtilisateur() {

@@ -7,20 +7,30 @@ public class Retraits {
 
 	private int noRetrait;
 	private String rue;
-	private int codePostal;
+	private String codePostal;
 	private String ville;
 
 	public Retraits() {
 	}
 	
-	public Retraits(String rue, int codePostal, String ville) {
+	public Retraits(String rue, String codePostal, String ville) {
 		super();
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
 	}
 
-	public Retraits(int noRetrait, String rue, int codePostal, String ville) {
+	/**
+	 * @{inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Retraits [noRetrait=" + noRetrait + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville
+				+ "]";
+	}
+
+	public Retraits(int noRetrait, String rue, String codePostal, String ville) {
 		super();
 		this.noRetrait = noRetrait;
 		this.rue = rue;
@@ -46,11 +56,11 @@ public class Retraits {
 		this.rue = rue;
 	}
 
-	public int getCodePostal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
 
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 

@@ -3,7 +3,7 @@
  */
 package fr.eni.projetenchere.bo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ArticlesVendus {
 
@@ -15,14 +15,14 @@ public class ArticlesVendus {
 	private int prixInitial;
 	private int prixVente;
 	private int noUtilisateur;
-	private int noCategorie;
-	private int noRetrait;
+	private Categories categorie;
+	private Retraits retrait;
 
 	public ArticlesVendus() {
 	}
 
 	public ArticlesVendus(int noArticle, String nomArticle, String description, Date debutEncheres, Date finEncheres,
-			int prixInitial, int prixVente, int noUtilisateur, int noCategorie, int noRetrait) {
+			int prixInitial, int prixVente, int noUtilisateur, Categories categorie, Retraits retrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -32,8 +32,68 @@ public class ArticlesVendus {
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.noUtilisateur = noUtilisateur;
-		this.noCategorie = noCategorie;
-		this.noRetrait = noRetrait;
+		this.categorie = categorie;
+		this.retrait = retrait;
+	}
+
+	/**
+	 * @{inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ArticlesVendus [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", debutEncheres=" + debutEncheres + ", finEncheres=" + finEncheres + ", prixInitial=" + prixInitial
+				+ ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + ", categorie=" + categorie
+				+ ", retrait=" + retrait + "]";
+	}
+
+	/**
+	 * Constructeur.
+	 * @param nomArticle
+	 * @param description
+	 * @param debutEncheres
+	 * @param finEncheres
+	 * @param prixInitial
+	 * @param prixVente
+	 * @param noUtilisateur
+	 */
+	public ArticlesVendus(String nomArticle, String description, Date debutEncheres, Date finEncheres, int prixInitial,
+			int prixVente, int noUtilisateur) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.debutEncheres = debutEncheres;
+		this.finEncheres = finEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
+	}
+
+	/**
+	 * Constructeur.
+	 * @param nomArticle
+	 * @param description
+	 * @param debutEncheres
+	 * @param finEncheres
+	 * @param prixInitial
+	 * @param prixVente
+	 * @param noUtilisateur
+	 * @param categorie
+	 * @param retrait
+	 */
+	public ArticlesVendus(String nomArticle, String description, Date debutEncheres, Date finEncheres, int prixInitial,
+			int prixVente, int noUtilisateur, Categories categorie, Retraits retrait) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.debutEncheres = debutEncheres;
+		this.finEncheres = finEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
+		this.categorie = categorie;
+		this.retrait = retrait;
 	}
 
 	public int getNoArticle() {
@@ -100,20 +160,20 @@ public class ArticlesVendus {
 		this.noUtilisateur = noUtilisateur;
 	}
 
-	public int getNoCategorie() {
-		return noCategorie;
+	public Categories getCategorie() {
+		return categorie;
 	}
 
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
+	public void setCategorie(Categories categorie) {
+		this.categorie = categorie;
 	}
 
-	public int getNoRetrait() {
-		return noRetrait;
+	public Retraits getRetrait() {
+		return retrait;
 	}
 
-	public void setNoRetrait(int noRetrait) {
-		this.noRetrait = noRetrait;
+	public void setNoRetrait(Retraits retrait) {
+		this.retrait = retrait;
 	}
 	
 	
