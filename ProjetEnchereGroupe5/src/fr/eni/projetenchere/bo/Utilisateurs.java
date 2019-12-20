@@ -163,7 +163,7 @@ public class Utilisateurs {
 	}
 
 
-	public boolean isAdministrateur() {
+	public boolean getAdministrateur() {
 		return administrateur;
 	}
 
@@ -179,5 +179,4 @@ public class Utilisateurs {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-
 }
