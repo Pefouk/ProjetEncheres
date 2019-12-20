@@ -14,8 +14,6 @@ public class Utilisateurs {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
-	private String newMotDePasse;
-	private String confirmMotDePasse;
 	
 	
 	public Utilisateurs(int noUtilisateur, String pseudo, String nom, String email, String telephone, String rue,

@@ -29,11 +29,12 @@ public class UtilisateursManager {
 		}
 		return u;
 	}
-	
+
 	public Utilisateurs inscriptionUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit) throws BLLException {
-		
-		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null || codePostal == null || ville == null || motDePasse == null)
+
+		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
+				|| codePostal == null || ville == null || motDePasse == null)
 			throw new BLLException("Un des champs est vide ! 0001");
 		if (credit < 0)
 			throw new BLLException("Les credits ne peuvent pas �tre n�gatifs ! 0002");
@@ -51,7 +52,7 @@ public class UtilisateursManager {
 			throw new BLLException("Code postal invalide ! Il ne doit contenir que des chiffres ! 0007");
 		}
 		try {
-			Long.getLong(telephone);			
+			Long.getLong(telephone);
 		} catch (Exception e) {
 			throw new BLLException("Numero de t�l�phone invalide ! il doit contenir que des chiffres ! 0008");
 		}
@@ -77,7 +78,8 @@ public class UtilisateursManager {
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
 		}
-		Utilisateurs u = new Utilisateurs(pseudo, nom, email, telephone, rue, codePostal, ville, motDePasse, credit, false, prenom);
+		Utilisateurs u = new Utilisateurs(pseudo, nom, email, telephone, rue, codePostal, ville, motDePasse, credit,
+				false, prenom);
 		try {
 			u = this.dao.createUtilisateur(u);
 		} catch (DALException e) {
@@ -85,12 +87,13 @@ public class UtilisateursManager {
 		}
 		return u;
 	}
-	
-	
-	public Utilisateurs modifierUtilisateur (int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, String verifMotDePasse, int credit, boolean administrateur, String motDePasseActuel) throws BLLException {
-		
-		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null || codePostal == null || ville == null || motDePasse == null)
+
+	public Utilisateurs modifierUtilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email,
+			String telephone, String rue, String codePostal, String ville, String motDePasse, String verifMotDePasse,
+			int credit, boolean administrateur, String motDePasseActuel) throws BLLException {
+
+		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
+				|| codePostal == null || ville == null || motDePasse == null)
 			throw new BLLException("Un des champs est vide ! 0010");
 		if (motDePasse.length() < 6)
 			throw new BLLException("Le mot de passe doit contenir au moins 6 caracteres ! 0003");
@@ -106,7 +109,7 @@ public class UtilisateursManager {
 			throw new BLLException("Code postal invalide ! Il ne doit contenir que des chiffres ! 0007");
 		}
 		try {
-			Long.getLong(telephone);			
+			Long.getLong(telephone);
 		} catch (Exception e) {
 			throw new BLLException("Numero de t�l�phone invalide ! il doit contenir que des chiffres ! 0008");
 		}
@@ -136,12 +139,23 @@ public class UtilisateursManager {
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
 		}
-		Utilisateurs u = new Utilisateurs(noUtilisateur, pseudo, nom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, prenom);
+		Utilisateurs u = new Utilisateurs(noUtilisateur, pseudo, nom, email, telephone, rue, codePostal, ville,
+				motDePasse, credit, administrateur, prenom);
 		try {
 			u = this.dao.modifierUtilisateur(u);
 		} catch (DALException e) {
 			throw new BLLException(e);
 		}
-		return u; 
+		return u;
+	}
+
+	public void supprimerUtilisateur(Utilisateurs u, String motDePasse) throws BLLException {
+		try {
+			if (!this.dao.verifierCompte(u.getNoUtilisateur(), motDePasse))
+				throw new BLLException("Mot de passe incorect !");
+			this.dao.supprimerCompte(u.getNoUtilisateur());
+		} catch (Exception e) {
+			throw new BLLException(e.getMessage());
+		}
 	}
 }

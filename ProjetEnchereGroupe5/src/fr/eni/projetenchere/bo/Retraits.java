@@ -61,7 +61,4 @@ public class Retraits {
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
-	
-	
-	
 }

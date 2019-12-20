@@ -8,11 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import fr.eni.projetenchere.bo.Utilisateurs;
-import fr.eni.projetenchere.dal.DAOFactory;
-import fr.eni.projetenchere.dal.UtilisateursDAO;
 
 /**
  * Servlet implementation class ServletProfil

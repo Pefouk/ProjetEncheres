@@ -18,7 +18,8 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 	private final String UPDATEUSER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = convert(nvarchar(256),HASHBYTES('SHA2_256', ? ), 2) WHERE no_utilisateur = ?";
 	private final String UNIQUEUSER = "SELECT * FROM UTILISATEURS WHERE email = ? OR pseudo = ?";
 	private final String VERIFICATIONMOTDEPASSE = "select * from Utilisateurs where no_utilisateur=? AND mot_de_passe =  convert(varchar(256),HASHBYTES('SHA2_256', ? ),2)";
-	
+	private final String DELETEUSER = "delete from UTILISATEURS where no_utilisateur=?";
+
 	@Override
 	public Utilisateurs createUtilisateur(Utilisateurs u) throws DALException {
 		ResultSet rs = null;
@@ -159,7 +160,7 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			ps.setString(1, email);
 			ps.setString(2, pseudo);
 			rs = ps.executeQuery();
-			for (;rs.next(); i++) {
+			for (; rs.next(); i++) {
 				if (!email.equals(rs.getString("email")) && !pseudo.equals(rs.getString("pseudo")))
 					res = true;
 			}
@@ -177,11 +178,11 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 		}
 		return (res);
 	}
-	
+
 	public boolean verifierCompte(int noUtilisateur, String motDePasse) throws DALException {
 		ResultSet rs = null;
 		boolean res = false;
-		
+
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement ps = con.prepareStatement(VERIFICATIONMOTDEPASSE)) {
 			ps.setInt(1, noUtilisateur);
@@ -200,5 +201,15 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			}
 		}
 		return res;
+	}
+
+	public void supprimerCompte(int noUtilisateur) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement ps = con.prepareStatement(DELETEUSER)) {
+			ps.setInt(1, noUtilisateur);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			throw new DALException("Erreur lors de la suppression du compte : 7000");
+		}
 	}
 }
