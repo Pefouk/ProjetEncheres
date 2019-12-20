@@ -104,3 +104,7 @@ footer {
 	position: relative;
 	bottom: 0;
 }
+
+textarea {
+	border-radius: 2% 2% 2% 2%;
+}

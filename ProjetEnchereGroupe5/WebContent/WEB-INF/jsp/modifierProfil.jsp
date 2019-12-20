@@ -20,6 +20,7 @@
 	<c:if test="${! empty utilisateur}">
 	<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
 		<form action="${pageContext.request.contextPath}/Profil" method="post">
+		<h1>Modifer mon profil</h1>
 			<label for="pseudo">Pseudo</label>
 			<input type="text" required name="pseudo" id="pseudo_id" class="form-control" value="${utilisateur.getPseudo()}" aria-label="Username" aria-describedby="addon-wrapping">
   			<label for="nom">Nom</label>

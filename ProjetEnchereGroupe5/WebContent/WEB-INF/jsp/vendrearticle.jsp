@@ -6,12 +6,55 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Vendre un article</title>
+<title>Nouvelle Vente</title>
 </head>
 <body>
 	<header>
 		<%@include file="../fragments/header.jsp" %>
 	</header>
+	<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
+	<h1>Nouvelle vente</h1>
+		<form action="${pageContext.request.contextPath}/vendrearticle" method="post">
+		<label for="article">Article</label>
+			<input type="text" required autofocus name="article" id="article_id" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping">
+			<br>
+			<label for="description">Description</label>
+			<textarea id="story" name="story" rows="4" cols="68">
+			</textarea>
+			<br><br>
+			<label for="categorie">Catégorie</label>
+   				<div class="categorie" id="categorie" name="categorie" cols="68">
+    			<select name="categorie" size="1">
+   				 <option>Informatique
+   				 <option>Ameublement
+   			 	 <option>Vêtements
+   				 <option>Sports & Loisirs
+   			 </select>
+   			 </div>
+   			 <br>
+   			 <label for="photo">Ajoutez une photo</label>
+   			 <br>
+   			 <input type="file"
+       		 id="photo" name="photo"
+       		 accept="image/png, image/jpeg">
+       		 <br><br>
+       		 <label for="number">Mise à prix</label>
+       		 <br>
+       		 <input id="number" type="number" value="0">
+       		 <br><br>
+       		 <label for="datedebut">Début de la mise en vente</label>
+			<input type="date" id="debutdate" name="debutdate"
+       		value="2018-07-22"
+      		 min="2018-01-01" max="2018-12-31">
+      		 <br>
+      		 <label for="datefin">Fin de la mise en vente</label>
+			<input type="date" id="findate" name="findate"
+       		value="localdate"
+      		 min="localdate" max="2018-12-31">
+   			 
+			
+		</form>
+	</div>
 	<footer>
 		<%@include file="../fragments/footer.jsp" %>
 	</footer>
