@@ -10,8 +10,8 @@
 
 		<div class="col">
 		<nav class="nav nav-pills">
-			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/listesencheresconnecter">Enchères</a><br> 
-			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/ServletVendreArticle">Vendre un article</a><br> 
+			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/connecte">Enchères</a><br> 
+			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/vendrearticle">Vendre un article</a><br> 
 			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/Profil">Mon profil</a>
 			<a class="nav-link active nav-item" href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
 	</nav>
