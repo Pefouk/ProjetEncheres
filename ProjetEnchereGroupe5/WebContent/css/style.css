@@ -67,6 +67,14 @@ a:hover {
 	background-color: red;
 }
 
+.danger {
+	text-align: center;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	background-color: #ad62aa;
+}
 
 /* Profil */
 .bodyprofil {

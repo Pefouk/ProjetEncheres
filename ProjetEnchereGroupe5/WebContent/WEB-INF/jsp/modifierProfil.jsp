@@ -44,9 +44,10 @@
   			<input type="password" required name="newMotDePasse" id="motDePasse_id" class="form-control" value="********" aria-label="Username" aria-describedby="addon-wrapping" >
 			<label for="confirmMotDePasse">Confirmer le nouveau mot de passe</label>
   			<input type="password" required name="confirmMotDePasse" id="motDePasse_id" class="form-control" value="********" aria-label="Username" aria-describedby="addon-wrapping" >
-		
 			<br>
   			<input type="submit" name="submit" class = "form-control" placeholder="Modifier" aria-label="Submit" aria-describedby="addon-wrapping" >
+  			<br><br>
+  			<a class="btn btn-danger btn-lg btn-block" href="${pageContext.request.contextPath}/supprimercompte" role="button">Supprimer mon compte</a>
 		</form>
 	</div>
 	</c:if>

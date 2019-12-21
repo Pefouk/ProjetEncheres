@@ -35,6 +35,8 @@
   			<input type="password" required name="motDePasse" id="motDePasse_id" class="form-control" placeholder="********" aria-label="Username" aria-describedby="addon-wrapping" disabled>
   			<br>
   			<input type="submit" alt="Submit" value="Modifier" class="btn btn-light" placeholder="Modifier">
+  			<br><br>
+  			<a class="btn btn-danger btn-lg btn-block" href="${pageContext.request.contextPath}/supprimercompte" role="button">Supprimer mon compte</a>
 		</form>
 	</div>
 	<footer>
