@@ -10,6 +10,7 @@
 	crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet">
+<link rel="icon" href="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp_400x400.jpg"/>
 <title>Nouvelle vente</title>
 </head>
 <body>

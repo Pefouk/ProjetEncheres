@@ -5,6 +5,7 @@
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+<link rel="icon" href="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp_400x400.jpg"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Nouvelle Vente</title>
 </head>
@@ -42,9 +43,7 @@
 			<input type="text" required autofocus name="miseaprix" id="miseaprix_id" class="form-control" placeholder="Prix de départ (euros)" aria-label="Username" aria-describedby="addon-wrapping">
        		 <br><br>
        		 <label for="datedebut">Début de la mise en vente</label>
-			<input type="date" id="debutdate" name="debutdate"
-       		value="2018-07-22"
-      		 min="2018-01-01" max="2018-12-31">
+			<input type="date" id="debutdate" name="debutdate" min=localdate value=localdate>
       		 <br>
       		 <label for="datefin">Fin de la mise en vente</label>
 			<input type="date" id="findate" name="findate"
