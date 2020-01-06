@@ -89,14 +89,12 @@ public class UtilisateursManager {
 	}
 
 	public Utilisateurs modifierUtilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email,
-			String telephone, String rue, String codePostal, String ville, String motDePasse, String verifMotDePasse,
-			int credit, boolean administrateur, String motDePasseActuel) throws BLLException {
+			String telephone, String rue, String codePostal, String ville, int credit, boolean administrateur,
+			String motDePasse) throws BLLException {
 
 		if (pseudo == null || nom == null || prenom == null || email == null || telephone == null || rue == null
 				|| codePostal == null || ville == null || motDePasse == null)
 			throw new BLLException("Un des champs est vide ! 0010");
-		if (motDePasse.length() < 6)
-			throw new BLLException("Le mot de passe doit contenir au moins 6 caracteres ! 0003");
 		if (!(email.contains("@")) || !(email.contains(".")))
 			throw new BLLException("Email invalide ! 0004");
 		if (telephone.length() != 10)
@@ -111,7 +109,7 @@ public class UtilisateursManager {
 		try {
 			Long.getLong(telephone);
 		} catch (Exception e) {
-			throw new BLLException("Numero de t�l�phone invalide ! il doit contenir que des chiffres ! 0008");
+			throw new BLLException("Numero de téléphone invalide ! il doit contenir que des chiffres ! 0008");
 		}
 		if (pseudo.length() > 30)
 			throw new BLLException("Pseudo trop long ! 0019");
@@ -129,12 +127,10 @@ public class UtilisateursManager {
 			throw new BLLException("Code postal invalide ! 0115");
 		if (ville.length() > 30)
 			throw new BLLException("Nom de ville trop grand ! 0116");
-		if (!verifMotDePasse.equals(motDePasse))
-			throw new BLLException("Les mots de passes ne correspondent pas !");
 		try {
 			if (this.dao.pseudoOuEmailDejaPris(email, pseudo))
 				throw new BLLException("Pseudo ou email déja utilisé !");
-			if (!this.dao.verifierCompte(noUtilisateur, motDePasseActuel))
+			if (!this.dao.verifierCompte(noUtilisateur, motDePasse))
 				throw new BLLException("Mot de passe invalide !");
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
@@ -185,7 +181,7 @@ public class UtilisateursManager {
 			throw new BLLException("Les mots de passe ne correspondent pas !");
 		try {
 			this.dao.changerMotDePasse(email, mdp);
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
 		}
 	}

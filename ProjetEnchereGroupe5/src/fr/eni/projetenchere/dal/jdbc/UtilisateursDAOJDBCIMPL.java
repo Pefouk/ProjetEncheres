@@ -149,6 +149,7 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 		} catch (Exception e) {
 			throw new DALException("Erreur lors de la modification du profil : 3000");
 		}
+		u.setMotDePasse(this.getHashMDP(u.getNoUtilisateur()));
 		return u;
 	}
 

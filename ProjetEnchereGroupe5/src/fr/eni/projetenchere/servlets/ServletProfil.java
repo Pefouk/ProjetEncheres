@@ -24,7 +24,7 @@ public class ServletProfil extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/profil.jsp");
-		
+
 		session.setAttribute("erreurModif", null);
 		if (session.getAttribute("utilisateur") == null)
 			response.sendRedirect(request.getContextPath() + "/connexion");
@@ -45,14 +45,13 @@ public class ServletProfil extends HttpServlet {
 			u = manager.modifierUtilisateur(u.getNoUtilisateur(), request.getParameter("pseudo"),
 					request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
 					request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codePostal"),
-					request.getParameter("ville"), request.getParameter("newMotDePasse"),
-					request.getParameter("confirmMotDePasse"), u.getCredit(), u.getAdministrateur(),
+					request.getParameter("ville"), u.getCredit(), u.getAdministrateur(),
 					request.getParameter("motDePasse"));
 			session.setAttribute("utilisateur", u);
 		} catch (Exception e) {
 			session.setAttribute("erreurModif", e.getMessage());
 		}
-		
+
 		if (session.getAttribute("utilisateur") == null)
 			response.sendRedirect(request.getContextPath() + "/connexion");
 		else if (session.getAttribute("erreurModif") == null)
