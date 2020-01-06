@@ -39,11 +39,11 @@
   			<input type="text" required name="ville" id="ville_id" class="form-control" value="${utilisateur.getVille()}" aria-label="Username" aria-describedby="addon-wrapping" >
   			<br><br>
   			<label for="motDePasse">Mot de passe actuel</label>
-  			<input type="password" required name="motDePasse" id="motDePasse_id" class="form-control" value="********" aria-label="Username" aria-describedby="addon-wrapping" >
+  			<input type="password" required name="motDePasse" id="motDePasse_id" class="form-control" placeholder="Mot de passe actuel" aria-label="Password" aria-describedby="addon-wrapping" >
   			<label for="newMotDePasse">Nouveau mot de passe</label>
-  			<input type="password" required name="newMotDePasse" id="motDePasse_id" class="form-control" value="********" aria-label="Username" aria-describedby="addon-wrapping" >
+  			<input type="password" required name="newMotDePasse" id="motDePasse_id" class="form-control" placeholder="Nouveau mot de passe" aria-label="Username" aria-describedby="addon-wrapping" >
 			<label for="confirmMotDePasse">Confirmer le nouveau mot de passe</label>
-  			<input type="password" required name="confirmMotDePasse" id="motDePasse_id" class="form-control" value="********" aria-label="Username" aria-describedby="addon-wrapping" >
+  			<input type="password" required name="confirmMotDePasse" id="motDePasse_id" class="form-control" placeholder="Confirmer le nouveau mot de passe" aria-label="Username" aria-describedby="addon-wrapping" >
 			<br>
   			<input type="submit" name="submit" class = "form-control" placeholder="Modifier" aria-label="Submit" aria-describedby="addon-wrapping" >
   			<br><br>

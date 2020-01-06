@@ -158,4 +158,35 @@ public class UtilisateursManager {
 			throw new BLLException(e.getMessage());
 		}
 	}
+
+	public boolean verifierCompte(String email, String pseudo) throws BLLException {
+		if (email == null || pseudo == null)
+			throw new BLLException("Un des champs est vide !");
+		if (!(email.contains("@")) || !(email.contains(".")))
+			throw new BLLException("Email invalide !");
+		if (email.length() > 50)
+			throw new BLLException("Email trop longue !");
+		try {
+			if (this.dao.motDePasseOublie(email, pseudo))
+				return (true);
+			else
+				return (false);
+		} catch (Exception e) {
+			throw new BLLException(e.getMessage());
+		}
+	}
+
+	public void changerMotDePasse(String mdp, String mdpv, String email) throws BLLException {
+		if (mdp.length() < 6)
+			throw new BLLException("Le mot de passe doit contenir au moins 6 caracteres !");
+		if (mdp.length() > 255)
+			throw new BLLException("Le mot de passe est trop long !");
+		if (!mdp.equals(mdpv))
+			throw new BLLException("Les mots de passe ne correspondent pas !");
+		try {
+			this.dao.changerMotDePasse(email, mdp);
+		} catch (Exception e){
+			throw new BLLException(e.getMessage());
+		}
+	}
 }

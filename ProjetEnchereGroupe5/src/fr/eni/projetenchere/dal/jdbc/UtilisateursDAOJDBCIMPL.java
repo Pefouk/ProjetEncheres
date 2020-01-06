@@ -19,6 +19,8 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 	private final String UNIQUEUSER = "SELECT * FROM UTILISATEURS WHERE email = ? OR pseudo = ?";
 	private final String VERIFICATIONMOTDEPASSE = "select * from Utilisateurs where no_utilisateur=? AND mot_de_passe =  convert(varchar(256),HASHBYTES('SHA2_256', ? ),2)";
 	private final String DELETEUSER = "delete from UTILISATEURS where no_utilisateur=?";
+	private final String MOTDEPASSEOUBLIE = "SELECT * FROM UTILISATEURS WHERE email=? AND pseudo=?;";
+	private final String CHANGERMDP = "UPDATE UTILISATEURS SET mot_de_passe = convert(varchar(256),HASHBYTES('SHA2_256', ?),2) where email = ?";
 
 	@Override
 	public Utilisateurs createUtilisateur(Utilisateurs u) throws DALException {
@@ -210,6 +212,45 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			ps.executeUpdate();
 		} catch (Exception e) {
 			throw new DALException("Erreur lors de la suppression du compte : 7000");
+		}
+	}
+
+	@Override
+	public boolean motDePasseOublie(String email, String pseudo) throws DALException {
+		ResultSet rs = null;
+		boolean res = false;
+
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement ps = con.prepareStatement(MOTDEPASSEOUBLIE)) {
+			ps.setString(1, email);
+			ps.setString(2, pseudo);
+			rs = ps.executeQuery();
+			if (rs.next())
+				res = true;
+		} catch (Exception e) {
+			throw new DALException("Erreur lors de la récuperation du compte pour le mot de passe oublié : 8000");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				throw new DALException("Erreur lors de la fermeture de du resultset : 8001");
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public void changerMotDePasse(String email, String mdp) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement ps = con.prepareStatement(CHANGERMDP)) {
+			ps.setString(1, mdp);
+			ps.setString(2, email);
+			int res = ps.executeUpdate();
+			if (res != 1)
+				throw new DALException("Erreur lors de la modification du mot de passe");
+		} catch (Exception e) {
+			throw new DALException("Erreur lors de la modification du mot de passe");
 		}
 	}
 }

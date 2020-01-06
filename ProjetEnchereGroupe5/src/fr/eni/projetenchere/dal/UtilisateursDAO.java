@@ -10,4 +10,6 @@ public interface UtilisateursDAO {
 	boolean pseudoOuEmailDejaPris(String email, String pseudo) throws DALException;
 	boolean verifierCompte(int noUtilisateur, String motDePasse) throws DALException;
 	void supprimerCompte(int noUtilisateur) throws DALException;
+	boolean motDePasseOublie(String email, String pseudo) throws DALException;
+	void changerMotDePasse(String email, String mdp) throws DALException;
 }
