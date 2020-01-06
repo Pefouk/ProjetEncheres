@@ -16,10 +16,10 @@
 	<h1>Nouvelle vente</h1>
 		<form action="${pageContext.request.contextPath}/vendrearticle" method="post">
 		<label for="article">Article</label>
-			<input type="text" required autofocus name="article" id="article_id" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping">
+			<input type="text" required autofocus name="article" id="article_id" class="form-control" placeholder="Nom de l'article" aria-label="Username" aria-describedby="addon-wrapping">
 			<br>
 			<label for="description">Description</label>
-			<textarea id="story" name="story" rows="4" cols="68">
+			<textarea id="story" name="story" rows="4" cols="68" placeholder="Description de l'article (couleur, taille, état, marque etc)">
 			</textarea>
 			<br><br>
 			<label for="categorie">Catégorie</label>
@@ -38,9 +38,8 @@
        		 id="photo" name="photo"
        		 accept="image/png, image/jpeg">
        		 <br><br>
-       		 <label for="number">Mise à prix</label>
-       		 <br>
-       		 <input id="number" type="number" value="0">
+       		 <label for="miseaprix">Mise à prix</label>
+			<input type="text" required autofocus name="miseaprix" id="miseaprix_id" class="form-control" placeholder="Prix de départ (euros)" aria-label="Username" aria-describedby="addon-wrapping">
        		 <br><br>
        		 <label for="datedebut">Début de la mise en vente</label>
 			<input type="date" id="debutdate" name="debutdate"
