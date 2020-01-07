@@ -27,10 +27,13 @@ public class ServletTest extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EncheresDAO dao = DAOFactory.getEncheresDAO();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		Encheres e = new Encheres(date, 250, 2);
-		ArticlesVendus a = new ArticlesVendus("Fauteuil", "Neuf 3 places", date, date, 150, 150, 12);
+		Encheres e = new Encheres(date, 250, 1);
+		ArticlesVendus a = new ArticlesVendus("Fauteuil", "Neuf 3 places", date, date, 150, 150, 1);
 		Retraits r = new Retraits("Rue de la pinterie", "35000", "Rennes");
-		Categories c = new Categories(3, "Ameublement");
+		Categories c = new Categories(2, "Ameublement");
+		a.setCategorie(c);
+		a.setNoRetrait(r);
+		e.setArticle(a);
 		try {
 			e = dao.createEnchere(r, a, e, c);
 			System.out.println(e.toString());

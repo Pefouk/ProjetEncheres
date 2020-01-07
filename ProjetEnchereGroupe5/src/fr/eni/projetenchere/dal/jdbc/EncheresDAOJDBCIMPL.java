@@ -25,7 +25,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	private final String SELECT_ENCHERES = "SELECT * FROM ENCHERES";
 	private final String SELECT_MOT_CLE = "SELECT * FROM ARTICLES_VENDUS where nom_article= ?";
 	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES where";
-	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?";
+	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?)";
 	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
 
@@ -43,6 +43,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 		PreparedStatement stm2 = null;
 		PreparedStatement stm3 = null;
 		ResultSet rslt = null;
+		ResultSet rslt2 = null;
 
 		try {
 			con = ConnectionProvider.getConnection();
@@ -69,17 +70,19 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			stm2.setInt(8, a.getCategorie().getNoCategorie());
 			stm2.setInt(9, a.getRetrait().getNoRetrait());
 			stm2.executeUpdate();
-			rslt.next();
-			a.setNoArticle(rslt.getInt(1));
-			
+			rslt2 = stm2.getGeneratedKeys();	
+			rslt2.next();
+			a.setNoArticle(rslt2.getInt(1));
 			
 			stm3.setInt(1, e.getArticle().getNoArticle());
-			stm3.setDate(2, e.getDateEnchere());
+			stm3.setInt(2, e.getMontantEnchere());
 			stm3.setInt(3, e.getNoUtilisateur());
 			stm3.executeUpdate();
-			rslt.next();
 			a.setNoRetrait(r);
 			e.setArticle(a);
+			con.commit();
+	
+			
 		} catch (Exception e2) {
 			try {
 				con.rollback();
@@ -106,6 +109,9 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 				if (rslt != null) {
 					rslt.close();
 				}
+				if (rslt2 != null) {
+					rslt2.close();
+				}		
 
 			} catch (Exception e3) {
 				throw new DALException(
@@ -119,6 +125,20 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	@Override
 	public List<Encheres> selectAll(Encheres e) throws DALException {
 		List<Encheres> listeRepas = new ArrayList<Encheres>();
+		Connection con = null;
+		PreparedStatement stm1 = null;
+		ResultSet rslt = null;
+		
+		try {
+			con = ConnectionProvider.getConnection();
+			con.setAutoCommit(false);
+			
+		
+			
+		} catch (Exception e2) {
+
+		}
+		
 
 		return null;
 	}
