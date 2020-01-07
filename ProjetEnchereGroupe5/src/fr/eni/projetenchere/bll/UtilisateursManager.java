@@ -54,7 +54,7 @@ public class UtilisateursManager {
 		try {
 			Long.getLong(telephone);
 		} catch (Exception e) {
-			throw new BLLException("Numero de t�l�phone invalide ! il doit contenir que des chiffres ! 0008");
+			throw new BLLException("Numero de téléphone invalide ! il doit contenir que des chiffres ! 0008");
 		}
 		if (pseudo.length() > 30)
 			throw new BLLException("Pseudo trop long ! 0009");
@@ -68,8 +68,6 @@ public class UtilisateursManager {
 			throw new BLLException("Telephone trop long ! 0013");
 		if (rue.length() > 30)
 			throw new BLLException("Rue trop longue ! 0014");
-		if (codePostal.length() > 5)
-			throw new BLLException("Code postal invalide ! 0015");
 		if (ville.length() > 30)
 			throw new BLLException("Nom de ville trop grand ! 0016");
 		try {
