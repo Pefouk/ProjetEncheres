@@ -20,8 +20,7 @@
 			<input type="text" required autofocus name="article" id="article_id" class="form-control" placeholder="Nom de l'article" aria-label="Username" aria-describedby="addon-wrapping">
 			<br>
 			<label for="description">Description</label>
-			<textarea id="story" name="story" rows="4" cols="68" placeholder="Description de l'article (couleur, taille, état, marque etc)">
-			</textarea>
+			<textarea id="story" name="story" rows="4" cols="68" placeholder="Description de l'article (couleur, taille, état, marque etc)"></textarea>
 			<br><br>
 			<label for="categorie">Catégorie</label>
    				<div class="categorie" id="categorie" name="categorie" cols="68">
@@ -40,15 +39,27 @@
        		 accept="image/png, image/jpeg">
        		 <br><br>
        		 <label for="miseaprix">Mise à prix</label>
-			<input type="text" required autofocus name="miseaprix" id="miseaprix_id" class="form-control" placeholder="Prix de départ (euros)" aria-label="Username" aria-describedby="addon-wrapping">
+       		 <br>
+       		 <input type="number" id="miseaprix" name="miseaprix"
+       			min="0" max="">
        		 <br><br>
-       		 <label for="datedebut">Début de la mise en vente</label>
-			<input type="date" id="debutdate" name="debutdate" min=localdate value=localdate>
+      		 <label for="datefin">Date limite de l'enchère</label>
       		 <br>
-      		 <label for="datefin">Fin de la mise en vente</label>
 			<input type="date" id="findate" name="findate"
        		value="localdate"
-      		 min="localdate" max="2018-12-31">
+      		 min="2020-01-02" max="2021-01-01">
+      		 <br><br><br>
+      		 <h1>Retrait de l'article</h1>
+      		 <br>
+      		 <label for="rue">Rue</label>
+      		 <input type="text" required autofocus name="rue" id="rue_id" class="form-control" placeholder="Rue et N°" aria-label="Username" aria-describedby="addon-wrapping">
+      		 <label for="codePostal">Code Postal</label>
+      		 <input type="text" required autofocus name="codePostal" id="codePostal_id" class="form-control" placeholder="Code postal" aria-label="Username" aria-describedby="addon-wrapping">
+      		 <label for="ville">Ville</label>
+      		 <input type="text" required autofocus name="ville" id="ville_id" class="form-control" placeholder="Ville" aria-label="Username" aria-describedby="addon-wrapping">
+      		 <input type="submit" value="Valider">
+      		 <input type="submit" value="Annuler">
+      		 
    			 
 			
 		</form>
