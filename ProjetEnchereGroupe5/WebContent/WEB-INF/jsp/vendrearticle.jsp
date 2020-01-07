@@ -58,7 +58,7 @@
       		 <label for="ville">Ville</label>
       		 <input type="text" required autofocus name="ville" id="ville_id" class="form-control" placeholder="Ville" aria-label="Username" aria-describedby="addon-wrapping">
 			 <br>
-			 <input type="button" alt="submit" class="btn btn-light" value="Valider">
+			<button class="btn btn-light" type="submit">Valider</button>
 			<a class="btn btn-light" href="${pageContext.request.contextPath}/" role="button">Annuler</a>
       		 
    			 
