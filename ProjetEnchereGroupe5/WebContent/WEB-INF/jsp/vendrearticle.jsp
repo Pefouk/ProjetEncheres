@@ -57,8 +57,9 @@
       		 <input type="text" required autofocus name="codePostal" id="codePostal_id" class="form-control" placeholder="Code postal" aria-label="Username" aria-describedby="addon-wrapping">
       		 <label for="ville">Ville</label>
       		 <input type="text" required autofocus name="ville" id="ville_id" class="form-control" placeholder="Ville" aria-label="Username" aria-describedby="addon-wrapping">
-      		 <input type="submit" value="Valider">
-      		 <input type="submit" value="Annuler">
+			 <br>
+			 <input type="button" alt="submit" class="btn btn-light" value="Valider">
+			<a class="btn btn-light" href="${pageContext.request.contextPath}/" role="button">Annuler</a>
       		 
    			 
 			
