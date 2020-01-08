@@ -37,7 +37,7 @@ public class ServletCreerEnchere extends HttpServlet {
 			throws ServletException, IOException {
 		EnchereManager manager = new EnchereManager();
 		HttpSession session = request.getSession();
-		RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailsEnchere.jsp");
 		Utilisateurs u = (Utilisateurs) session.getAttribute("utilisateur");
 		Encheres e = new Encheres();
 
@@ -51,8 +51,10 @@ public class ServletCreerEnchere extends HttpServlet {
 		} catch (Exception e2) {
 			e2.printStackTrace();
 			request.setAttribute("erreurCreerEnchere", e2.getMessage());
+			RequestDispatcher rd1 = request.getRequestDispatcher("/WEB-INF/jsp/vendrearticle.jsp");
+			rd1.forward(request, response);
 		}
-		System.out.println(e.toString());
+		rd.forward(request, response);
 	}
 
 }
