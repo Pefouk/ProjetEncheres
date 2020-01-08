@@ -23,20 +23,12 @@ import fr.eni.projetenchere.dal.EncheresDAO;
 public class EncheresDAOJDBCIMPL implements EncheresDAO {
 
 	private final String SELECT_ENCHERES = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where ENCHERES.no_article=?";
-//	private final String SELECT_MOT_CLE = "SELECT * FROM ARTICLES_VENDUS where nom_article= ?";
-//	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES where";
 	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?)";
 	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, GETDATE(), ?, ?, ?, ?, ?, ?)";
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
 	private final String SELECT_ALL = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait";
-	
-	// INSERT CATEGORIES ( libelle) values ('trop bien')
-	// SELECT * FROM RETRAITS
-	// SELECT * FROM ARTICLES_VENDUS
-	//
-	// SELECT * FROM ARTICLES_VENDUS where nom_article= 'Fauteuil'
-	// mettre arrayslist ici
-
+	private final String SELECT_EN_COURS = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where ARTICLES_VENDUS.date_debut_encheres <= GETDATE() and ARTICLES_VENDUS.date_fin_encheres >= GETDATE()";
+	private final String SELECT_BY_CATEGORIE = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where CATEGORIES.no_categorie = ?";
 	@Override
 	public Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException {
 		Connection con = null;
@@ -185,38 +177,60 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	}
 
 	@Override
-	public List<Encheres> selectAll(Encheres e) throws DALException {
-		List<Encheres> listeAllEncheres = new ArrayList<Encheres>();
-		Connection con = null;
-		PreparedStatement stm = null;
-		ResultSet rslt = null;
+	public List<Encheres> selectEnCours() throws DALException {
+		List<Encheres> listeEnCours = new ArrayList<Encheres>();
 		
-		try {
-			con = ConnectionProvider.getConnection();
-			con.setAutoCommit(false);
-			stm = con.prepareStatement(SELECT_ENCHERES, PreparedStatement.RETURN_GENERATED_KEYS);
-			
-			stm.setDate(1 , e.getDateEnchere());
-			stm.setInt(2, e.getMontantEnchere());
-//			stm.setArticle(3, e.getArticle());
-//			stm.setInt(4, e.getNoUtilisateur());
-//			
-//			rslt = stm.getGeneratedKeys();	
-//			rslt.next();
-//			e.setArticle(e.getArticle());
-//		
-//			listeAllEncheres = ;
-//			
+		
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement stm = con.prepareStatement(SELECT_EN_COURS);
+				ResultSet rs = stm.executeQuery();)
+		{
+			while (rs.next()) 
+			{
+				listeEnCours.add(recupererEnchere(rs));
+			}
 		} catch (Exception e2) {
-			throw new DALException("Erreur lors de l'affichage des enchères.");
+			throw new DALException("Impossible de voir les listes en cours !");
 		}
-		return listeAllEncheres;
+		return listeEnCours;
+	}
+	
+	@Override
+	public List<Encheres> selectAll() throws DALException {
+		List<Encheres> listeAll = new ArrayList<Encheres>();
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement stm = con.prepareStatement(SELECT_ALL);
+				ResultSet rs = stm.executeQuery();)
+		{
+			while (rs.next()) 
+			{
+				listeAll.add(recupererEnchere(rs));
+			}
+		} catch (Exception e2) {
+			throw new DALException("Impossible de voir les listes !");
+		}
+		return listeAll;
 	}
 
 	@Override
-	public List<Encheres> selectByCategorie(Categories c) throws DALException {
+	public List<Encheres> selectByCategorie() throws DALException {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
-
+			ResultSet rs = null;
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement stm = con.prepareStatement(SELECT_BY_CATEGORIE);)
+		{
+			rs = stm.executeQuery();
+			while (rs.next())
+			{
+				listeByCategorie.add(recupererEnchere(rs));
+			}
+			
+		} catch (Exception e) {
+			throw new DALException("Impossible de voir les listes par catégorie !");
+		}
+		
+		
+		//peut pas mettre le rs dans le try 
 		return listeByCategorie;
 	}
 

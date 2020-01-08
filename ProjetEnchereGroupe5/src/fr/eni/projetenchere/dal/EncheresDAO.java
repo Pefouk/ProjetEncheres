@@ -12,14 +12,18 @@ import fr.eni.projetenchere.bo.Retraits;
 
 public interface EncheresDAO {
 
-	List<Encheres> selectAll(Encheres e) throws DALException;
-	List<Encheres> selectByCategorie(Categories c) throws DALException;
+	
+	Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException;
+	Encheres selectEnchere(int noArticle)throws DALException;
+	List<Encheres> selectAll() throws DALException;
+	List<Encheres> selectEnCours() throws DALException;
+	List<Encheres> selectByCategorie() throws DALException;
+	//Categorie c dans le selectByCategorie() ?
+ 	
 	List<Categories> selectCategories() throws DALException;
 	List<Encheres> selectByUser(int Utilisateurs) throws DALException;
 	List<Encheres> selectEnchGagne(Categories c) throws DALException;
 	List<Encheres> selectByMotCle(String nomArticle) throws DALException;
-	Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException;
-	Encheres selectEnchere(int noArticle)throws DALException;
 	
 }
 //INSERT CATEGORIES ( libelle) values ('trop bien')

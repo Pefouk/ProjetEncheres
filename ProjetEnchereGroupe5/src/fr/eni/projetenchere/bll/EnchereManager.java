@@ -4,6 +4,8 @@
 package fr.eni.projetenchere.bll;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.projetenchere.bo.ArticlesVendus;
 import fr.eni.projetenchere.bo.Categories;
@@ -122,4 +124,38 @@ public class EnchereManager {
 		}
 		return e;
 	}
+	
+	public List<Encheres> recupererEnCours() throws BLLException {
+		List<Encheres> liste = new ArrayList<Encheres>();
+		try {
+			liste = this.dao.selectEnCours();
+		} catch (Exception e) {
+				throw new BLLException(e.getMessage());
+		}
+		return liste;
+	}
+	
+	public List<Encheres> recupererAll() throws BLLException {
+		List<Encheres> listeAll = new ArrayList<Encheres>();
+		try {
+			listeAll = this.dao.selectAll();
+		} catch (Exception e) {
+				throw new BLLException(e.getMessage());
+		}
+		return listeAll;
+	}
+	
+	
+	public List<Encheres> recupererByCategorie() throws BLLException {
+		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
+		try {
+			listeByCategorie = this.dao.selectByCategorie();
+		} catch (Exception e) {
+				throw new BLLException(e.getMessage());
+		}
+		
+		return listeByCategorie;
+	}
+	
+	
 }
