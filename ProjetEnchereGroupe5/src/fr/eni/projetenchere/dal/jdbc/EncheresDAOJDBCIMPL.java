@@ -22,11 +22,11 @@ import fr.eni.projetenchere.dal.EncheresDAO;
 
 public class EncheresDAOJDBCIMPL implements EncheresDAO {
 
-	private final String SELECT_ENCHERES = "SELECT * FROM ENCHERES";
-	private final String SELECT_MOT_CLE = "SELECT * FROM ARTICLES_VENDUS where nom_article= ?";
-	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES where";
+	private final String SELECT_ENCHERES = "SELECT (no_article, date_enchere, montant_enchere, no_utilisateur)FROM ENCHERES";
+//	private final String SELECT_MOT_CLE = "SELECT * FROM ARTICLES_VENDUS where nom_article= ?";
+//	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES where";
 	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?)";
-	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, GETDATE(), ?, ?, ?, ?, ?, ?)";
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
 
 	// INSERT CATEGORIES ( libelle) values ('trop bien')
@@ -62,13 +62,12 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			
 			stm2.setString(1, a.getNomArticle());
 			stm2.setString(2, a.getDescription());
-			stm2.setDate(3, a.getDebutEncheres());
-			stm2.setDate(4, a.getFinEncheres());
-			stm2.setInt(5, a.getPrixInitial());
-			stm2.setInt(6, a.getPrixVente());
-			stm2.setInt(7, a.getNoUtilisateur());
-			stm2.setInt(8, a.getCategorie().getNoCategorie());
-			stm2.setInt(9, a.getRetrait().getNoRetrait());
+			stm2.setDate(3, a.getFinEncheres());
+			stm2.setInt(4, a.getPrixInitial());
+			stm2.setInt(5, a.getPrixVente());
+			stm2.setInt(6, a.getNoUtilisateur());
+			stm2.setInt(7, a.getCategorie().getNoCategorie());
+			stm2.setInt(8, a.getRetrait().getNoRetrait());
 			stm2.executeUpdate();
 			rslt2 = stm2.getGeneratedKeys();	
 			rslt2.next();
@@ -77,6 +76,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			stm3.setInt(1, e.getArticle().getNoArticle());
 			stm3.setInt(2, e.getMontantEnchere());
 			stm3.setInt(3, e.getNoUtilisateur());
+			System.out.println(e.getNoUtilisateur());
 			stm3.executeUpdate();
 			a.setNoRetrait(r);
 			e.setArticle(a);
@@ -124,67 +124,63 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 
 	@Override
 	public List<Encheres> selectAll(Encheres e) throws DALException {
-		List<Encheres> listeRepas = new ArrayList<Encheres>();
+		List<Encheres> listeAllEncheres = new ArrayList<Encheres>();
 		Connection con = null;
-		PreparedStatement stm1 = null;
+		PreparedStatement stm = null;
 		ResultSet rslt = null;
 		
 		try {
 			con = ConnectionProvider.getConnection();
 			con.setAutoCommit(false);
+			stm = con.prepareStatement(SELECT_ENCHERES, PreparedStatement.RETURN_GENERATED_KEYS);
 			
-		
+			stm.setDate(1 , e.getDateEnchere());
+//			stm.setInt(2, e.getMontantEnchere());
+//			stm.setArticle(3, e.getArticle());
+//			stm.setInt(4, e.getNoUtilisateur());
+//			
+//			rslt = stm.getGeneratedKeys();	
+//			rslt.next();
+//			e.setArticle(e.getArticle());
+//		
+//			listeAllEncheres = ;
 			
 		} catch (Exception e2) {
-
+			throw new DALException("Erreur lors de l'affichage des enchères.");
 		}
-		
-
-		return null;
+		return listeAllEncheres;
 	}
 
 	@Override
 	public List<Encheres> selectByCategorie(Categories c) throws DALException {
-		List<Encheres> listeRepas = new ArrayList<Encheres>();
+		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
 
-		return null;
+		return listeByCategorie;
 	}
 
 	@Override
 	public List<Encheres> selectByMotCle(String nomArticle) throws DALException {
-		List<Encheres> listeRepas = new ArrayList<Encheres>();
+		List<Encheres> listeByMotCle = new ArrayList<Encheres>();
 
-		return null;
+		return listeByMotCle;
 	}
 
-	/**
-	 * @{inheritDoc}
-	 * @see fr.eni.projetenchere.dal.EncheresDAO#selectCategories()
-	 */
 	@Override
 	public List<Categories> selectCategories() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Categories> listeCategorie = new ArrayList<Categories>();
+		return listeCategorie;
 	}
 
-	/**
-	 * @{inheritDoc}
-	 * @see fr.eni.projetenchere.dal.EncheresDAO#selectByUser(int)
-	 */
 	@Override
 	public List<Encheres> selectByUser(int Utilisateurs) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Encheres> listeByUser = new ArrayList<Encheres>();
+		return listeByUser;
 	}
 
-	/**
-	 * @{inheritDoc}
-	 * @see fr.eni.projetenchere.dal.EncheresDAO#selectEnchGagne(fr.eni.projetenchere.bo.Categories)
-	 */
 	@Override
 	public List<Encheres> selectEnchGagne(Categories c) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Encheres> listeEnchereGagnee = new ArrayList<Encheres>();
+		return listeEnchereGagnee;
 	}
 
 }
