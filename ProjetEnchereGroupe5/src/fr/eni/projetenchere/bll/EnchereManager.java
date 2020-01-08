@@ -113,4 +113,13 @@ public class EnchereManager {
 		return e;
 	}
 
+	public Encheres recupererenchere(int noArticle) throws BLLException {
+		Encheres e = new Encheres();
+		try {
+			e = this.dao.selectEnchere(noArticle);
+		} catch (Exception e2) {
+			throw new BLLException(e2.getMessage());	
+		}
+		return e;
+	}
 }

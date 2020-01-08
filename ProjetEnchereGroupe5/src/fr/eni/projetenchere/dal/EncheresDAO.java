@@ -19,6 +19,8 @@ public interface EncheresDAO {
 	List<Encheres> selectEnchGagne(Categories c) throws DALException;
 	List<Encheres> selectByMotCle(String nomArticle) throws DALException;
 	Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException;
+	Encheres selectEnchere(int noArticle)throws DALException;
+	
 }
 //INSERT CATEGORIES ( libelle) values ('trop bien')
 //

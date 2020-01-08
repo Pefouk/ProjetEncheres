@@ -22,13 +22,14 @@ import fr.eni.projetenchere.dal.EncheresDAO;
 
 public class EncheresDAOJDBCIMPL implements EncheresDAO {
 
-	private final String SELECT_ENCHERES = "SELECT (no_article, date_enchere, montant_enchere, no_utilisateur)FROM ENCHERES";
+	private final String SELECT_ENCHERES = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where ENCHERES.no_article=?";
 //	private final String SELECT_MOT_CLE = "SELECT * FROM ARTICLES_VENDUS where nom_article= ?";
 //	private final String SELECT_CATEGORIES = "SELECT * FROM CATEGORIES where";
 	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?)";
 	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, GETDATE(), ?, ?, ?, ?, ?, ?)";
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
-
+	private final String SELECT_ALL = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait";
+	
 	// INSERT CATEGORIES ( libelle) values ('trop bien')
 	// SELECT * FROM RETRAITS
 	// SELECT * FROM ARTICLES_VENDUS
@@ -76,13 +77,11 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			stm3.setInt(1, e.getArticle().getNoArticle());
 			stm3.setInt(2, e.getMontantEnchere());
 			stm3.setInt(3, e.getNoUtilisateur());
-			System.out.println(e.getNoUtilisateur());
 			stm3.executeUpdate();
 			a.setNoRetrait(r);
 			e.setArticle(a);
 			con.commit();
 	
-			
 		} catch (Exception e2) {
 			try {
 				con.rollback();
@@ -91,7 +90,6 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			}
 			e2.printStackTrace();
 			throw new DALException("Echec lors de l'ajout de l'enchère en base de donnée");
-
 		} finally {
 			try {
 				if (con != null) {
@@ -111,14 +109,78 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 				}
 				if (rslt2 != null) {
 					rslt2.close();
-				}		
-
+				}
 			} catch (Exception e3) {
-				throw new DALException(
-						"Erreur lors de la fermeture de la connexion, du resultset ou du preparedStatement");
+				throw new DALException("Erreur lors de la fermeture de la connexion, du resultset ou du preparedStatement");
 			}
 		}
-
+		return e;
+	}
+	
+	
+	@Override
+	public Encheres selectEnchere(int noArticle) throws DALException {
+		ResultSet rslt = null;
+		Encheres en = new Encheres();
+		
+		try(Connection con = ConnectionProvider.getConnection();PreparedStatement stm1 = con.prepareStatement(SELECT_ENCHERES);)
+		{
+			stm1.setInt(1, noArticle);
+			rslt = stm1.executeQuery();
+			if (rslt.next()) {
+				
+				en = recupererEnchere(rslt);
+				
+			}else {
+				throw new DALException("Pas d'encheres !");
+			}
+			
+		} catch (Exception e) {
+			throw new DALException(e.getMessage());
+		}finally {
+			try {
+				if (rslt !=null) {
+					rslt.close();
+				}
+			} catch (Exception e2) {
+				throw new DALException("Erreur lors de la fermeture du resultstet !");
+			}
+		}
+			
+		
+		return en;
+	}
+	
+	private Encheres recupererEnchere(ResultSet rslt) throws SQLException{
+		Categories c = new Categories();
+		Retraits r = new Retraits();
+		ArticlesVendus a = new ArticlesVendus();
+		Encheres e = new Encheres();
+		
+		c.setLibelle(rslt.getString("libelle"));
+		c.setNoCategorie(rslt.getInt("no_categorie"));
+		
+		r.setCodePostal(rslt.getString("code_postal"));
+		r.setNoRetrait(rslt.getInt("no_retrait"));
+		r.setRue(rslt.getString("rue"));
+		r.setVille(rslt.getString("ville"));
+		
+		a.setCategorie(c);
+		a.setDebutEncheres(rslt.getDate("date_debut_encheres"));
+		a.setDescription(rslt.getString("description"));
+		a.setFinEncheres(rslt.getDate("date_fin_encheres"));
+		a.setNoArticle(rslt.getInt("no_article"));
+		a.setNomArticle(rslt.getString("nom_article"));
+		a.setNoRetrait(r);
+		a.setNoUtilisateur(rslt.getInt("no_utilisateur"));
+		a.setPrixInitial(rslt.getInt("prix_initial"));
+		a.setPrixVente(rslt.getInt("prix_vente"));
+		
+		e.setArticle(a);
+		e.setDateEnchere(rslt.getDate("date_enchere"));
+		e.setMontantEnchere(rslt.getInt("montant_enchere"));
+		e.setNoUtilisateur(rslt.getInt(4));
+		
 		return e;
 	}
 
@@ -135,7 +197,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			stm = con.prepareStatement(SELECT_ENCHERES, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			stm.setDate(1 , e.getDateEnchere());
-//			stm.setInt(2, e.getMontantEnchere());
+			stm.setInt(2, e.getMontantEnchere());
 //			stm.setArticle(3, e.getArticle());
 //			stm.setInt(4, e.getNoUtilisateur());
 //			
@@ -144,7 +206,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 //			e.setArticle(e.getArticle());
 //		
 //			listeAllEncheres = ;
-			
+//			
 		} catch (Exception e2) {
 			throw new DALException("Erreur lors de l'affichage des enchères.");
 		}

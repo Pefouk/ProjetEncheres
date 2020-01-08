@@ -37,16 +37,16 @@ public class ServletCreerEnchere extends HttpServlet {
 			throws ServletException, IOException {
 		EnchereManager manager = new EnchereManager();
 		HttpSession session = request.getSession();
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailsEnchere.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailsenchere.jsp");
 		Utilisateurs u = (Utilisateurs) session.getAttribute("utilisateur");
 		Encheres e = new Encheres();
-
-		System.out.println(e.getNoUtilisateur());
+		
 		try {
-			e = manager.createEncheres(2, request.getParameter("article"),
-					request.getParameter("description"), "2",
+			e = manager.createEncheres(u.getNoUtilisateur(), request.getParameter("article"),
+					request.getParameter("description"), request.getParameter("categorie"),
 					request.getParameter("miseaprix"), request.getParameter("findate"), request.getParameter("rue"),
 					request.getParameter("codePostal"), request.getParameter("ville"));
+			e = manager.recupererenchere(e.getArticle().getNoArticle());
 			request.setAttribute("enchere", e);
 		} catch (Exception e2) {
 			e2.printStackTrace();
