@@ -54,7 +54,6 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 				throw new DALException("Erreur lors de la fermeture de du resultset : 1001");
 			}
 		}
-		u.setMotDePasse(getHashMDP(u.getNoUtilisateur()));
 		return (u);
 	}
 

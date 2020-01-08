@@ -25,10 +25,10 @@
 			<label for="categorie">Catégorie</label>
    				<div class="categorie" id="categorie" name="categorie" cols="68">
     			<select name="categorie" size="1">
-   				 <option>Informatique
-   				 <option>Ameublement
-   			 	 <option>Vêtements
-   				 <option>Sports & Loisirs
+   				 <option value="1">Informatique
+   				 <option value="2">Ameublement
+   			 	 <option value="3">Vêtements
+   				 <option value="4">Sports & Loisirs
    			 </select>
    			 </div>
    			 <br>
