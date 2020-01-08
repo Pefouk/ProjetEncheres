@@ -15,12 +15,12 @@
 	</header>
 	<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
 	<h1>Nouvelle vente</h1>
-		<form action="${pageContext.request.contextPath}/vendrearticle" method="post">
+		<form action="${pageContext.request.contextPath}/CreerEnchere" method="post">
 		<label for="article">Article</label>
 			<input type="text" required autofocus name="article" id="article_id" class="form-control" placeholder="Nom de l'article" aria-label="Username" aria-describedby="addon-wrapping">
 			<br>
 			<label for="description">Description</label>
-			<textarea id="story" name="story" rows="4" cols="68" placeholder="Description de l'article (couleur, taille, état, marque etc)"></textarea>
+			<textarea id="story" name="description" rows="4" cols="68" placeholder="Description de l'article (couleur, taille, état, marque etc)"></textarea>
 			<br><br>
 			<label for="categorie">Catégorie</label>
    				<div class="categorie" id="categorie" name="categorie" cols="68">
@@ -58,7 +58,7 @@
       		 <label for="ville">Ville</label>
       		 <input type="text" required autofocus name="ville" id="ville_id" class="form-control" placeholder="Ville" aria-label="Username" aria-describedby="addon-wrapping">
 			 <br>
-			<button class="btn btn-light" type="submit">Valider</button>
+			 <button class="btn btn-light" type="submit">Valider</button>
 			<a class="btn btn-light" href="${pageContext.request.contextPath}/" role="button">Annuler</a>
       		 
    			 
