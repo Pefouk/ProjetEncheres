@@ -21,6 +21,7 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 	private final String DELETEUSER = "delete from UTILISATEURS where no_utilisateur=?";
 	private final String MOTDEPASSEOUBLIE = "SELECT * FROM UTILISATEURS WHERE email=? AND pseudo=?;";
 	private final String CHANGERMDP = "UPDATE UTILISATEURS SET mot_de_passe = convert(varchar(256),HASHBYTES('SHA2_256', ?),2) where email = ?";
+	private final String GETVENDEUR = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	@Override
 	public Utilisateurs createUtilisateur(Utilisateurs u) throws DALException {
@@ -45,13 +46,13 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			u.setNoUtilisateur(rs.getInt(1));
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DALException("Erreur lors de la cr�ation de l'utilisateur : 1000");
+			throw new DALException("Erreur lors de la création de l'utilisateur");
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 1001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return (u);
@@ -71,15 +72,15 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			if (rs.next()) {
 				u = recupererUtilisateur(rs);
 			} else
-				throw new DALException("Conection �chou�e, mot de passe ou email invalide");
+				throw new DALException("Conection échouée, mot de passe ou email invalide");
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la connection : 40000");
+			throw new DALException("Erreur lors de la connection");
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 4001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return u;
@@ -114,15 +115,15 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			if (rs.next())
 				res = rs.getString("mot_de_passe");
 			else
-				throw new DALException("Pas de hash de mot de passe trouv� : 2002");
+				throw new DALException("Pas de hash de mot de passe trouvé");
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la r�cuperation du hash de mot de passe : 2000");
+			throw new DALException("Erreur lors de la récuperation du hash de mot de passe");
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 2001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return (res);
@@ -144,9 +145,9 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			ps.setInt(10, u.getNoUtilisateur());
 			int res = ps.executeUpdate();
 			if (res != 1)
-				throw new DALException("Erreur lors de la modification du profil : 3001");
+				throw new DALException("Erreur lors de la modification du profil");
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la modification du profil : 3000");
+			throw new DALException("Erreur lors de la modification du profil");
 		}
 		u.setMotDePasse(this.getHashMDP(u.getNoUtilisateur()));
 		return u;
@@ -169,13 +170,13 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			if (i > 1)
 				res = true;
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la verification de l'unicité du compte : 5002");
+			throw new DALException("Erreur lors de la verification de l'unicité du compte");
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 5001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return (res);
@@ -199,7 +200,7 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 6001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return res;
@@ -211,7 +212,7 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			ps.setInt(1, noUtilisateur);
 			ps.executeUpdate();
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la suppression du compte : 7000");
+			throw new DALException("Erreur lors de la suppression du compte");
 		}
 	}
 
@@ -228,13 +229,13 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 			if (rs.next())
 				res = true;
 		} catch (Exception e) {
-			throw new DALException("Erreur lors de la récuperation du compte pour le mot de passe oublié : 8000");
+			throw new DALException("Erreur lors de la récuperation du compte pour le mot de passe oublié");
 		} finally {
 			try {
 				if (rs != null)
 					rs.close();
 			} catch (Exception e) {
-				throw new DALException("Erreur lors de la fermeture de du resultset : 8001");
+				throw new DALException("Erreur lors de la fermeture de du resultset");
 			}
 		}
 		return res;
@@ -252,5 +253,31 @@ public class UtilisateursDAOJDBCIMPL implements UtilisateursDAO {
 		} catch (Exception e) {
 			throw new DALException("Erreur lors de la modification du mot de passe");
 		}
+	}
+	
+	@Override
+	public Utilisateurs recupererVendeur(int noUtilisateur) throws DALException {
+		ResultSet rs = null;
+		Utilisateurs u = new Utilisateurs();
+
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement ps = con.prepareStatement(GETVENDEUR)) {
+			ps.setInt(1, noUtilisateur);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				u = recupererUtilisateur(rs);
+			} else
+				throw new DALException("Erreur lors de la récuperation du profil, numero de compte inexistant");
+		} catch (Exception e) {
+			throw new DALException("Erreur lors de la récuperation du profil");
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (Exception e) {
+				throw new DALException("Erreur lors de la fermeture du resultset");
+			}
+		}
+		return u;
 	}
 }

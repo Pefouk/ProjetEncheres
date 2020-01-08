@@ -183,4 +183,19 @@ public class UtilisateursManager {
 			throw new BLLException(e.getMessage());
 		}
 	}
+	
+	public Utilisateurs recupererUtilisateur(int noUtilisateur) throws BLLException {
+		Utilisateurs u = new Utilisateurs();
+		
+		if (noUtilisateur <= 0)
+			throw new BLLException("Le numéro utilisateur ne peut pas être negatif !");
+		try {
+			u = this.dao.recupererVendeur(noUtilisateur);
+			u.setMotDePasse(null);
+			u.setCredit(0);
+		} catch (Exception e) {
+			throw new BLLException(e.getMessage());
+		}
+		return u;
+	}
 }
