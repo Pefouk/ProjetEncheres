@@ -19,7 +19,10 @@
 	<c:if test="${! empty profil}">
 		<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
 			<h1>Profil de ${profil.getPseudo()}</h1>
-			<label for="pseudo">Pseudo</label>
+			<c:if test="${profil.getAdministrateur()}">
+				<h2>Administrateur</h2>
+			</c:if>
+				<label for="pseudo">Pseudo</label>
 				<input type="text" required name="pseudo" id="pseudo_id" class="form-control" placeholder="${profil.getPseudo()}" disabled>
 	  			<label for="nom">Nom</label>
 	  			<input type="text" required name="nom" id="nom_id" class="form-control" placeholder="${profil.getNom()}" disabled>
