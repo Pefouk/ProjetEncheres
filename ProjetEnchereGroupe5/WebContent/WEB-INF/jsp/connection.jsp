@@ -26,7 +26,7 @@
   			<input type="password" required name="motDePasse" id="motDePasse_id" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="addon-wrapping">
   			<br>
   			<label for="souvenir">Se souvenir de moi</label>
-  			<input type="checkbox" name="souvenir" id="souvenir" class="form-control" value="1">
+  			<input type="checkbox" name="souvenir" id="souvenir" class="form-control" value="1" >
   			<input type="submit" name="submit" class = "form-control" placeholder="Inscription">
   			<br><br>
   			<a class="btn btn-danger btn-lg btn-block" href="${pageContext.request.contextPath}/oublie" role="button">Mot de passe oublié</a>
