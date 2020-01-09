@@ -184,6 +184,21 @@ public class UtilisateursManager {
 		}
 	}
 	
+	public String recupererNomUtilisateur(int noUtilisateur) throws BLLException {
+		String res;
+		Utilisateurs u;
+		
+		if (noUtilisateur < 0)
+			throw new BLLException("Numéro d'utilisateur invalide");
+		try {
+			u = this.dao.recupererVendeur(noUtilisateur);
+			res = u.getNom();
+		} catch (Exception e) {
+			throw new BLLException(e.getMessage());
+		}
+		return res;
+	}
+	
 	public Utilisateurs recupererUtilisateur(int noUtilisateur) throws BLLException {
 		Utilisateurs u = new Utilisateurs();
 		

@@ -26,7 +26,7 @@ public class ServletConnection extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connection.jsp");
 		HttpSession session = request.getSession();
-		
+
 		session.setAttribute("erreurConnexion", null);
 		if (session.getAttribute("utilisateur") != null)
 			response.sendRedirect(request.getContextPath() + "/connecte");
