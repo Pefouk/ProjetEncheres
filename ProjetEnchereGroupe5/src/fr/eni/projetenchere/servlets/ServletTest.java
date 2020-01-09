@@ -28,12 +28,12 @@ public class ServletTest extends HttpServlet {
 			UtilisateursManager oui = new UtilisateursManager();
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
 			try {
-				List<Encheres> liste = bonjour.recupererMotCle("nomArticle");
-				for (Encheres encheres : liste) {
+				List<Encheres> listeMotCle = bonjour.recupererMotCle("%aulas%");
+				for (Encheres encheres : listeMotCle) {
 					
 					System.out.println(encheres);
 				}
-				request.setAttribute("listeEnchere", liste);
+				request.setAttribute("listeEnchere", listeMotCle);
 				rd.forward(request, response);
 				
 			}catch (Exception e) {
