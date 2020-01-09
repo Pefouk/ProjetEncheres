@@ -17,12 +17,13 @@ public interface EncheresDAO {
 	Encheres selectEnchere(int noArticle)throws DALException;
 	List<Encheres> selectAll() throws DALException;
 	List<Encheres> selectEnCours() throws DALException;
+	List<Encheres> selectByMotCle(String nomArticle) throws DALException;
+	
+	
 	List<Encheres> selectByCategorie(int noCategorie) throws DALException;
- 	
 	List<Categories> selectCategories() throws DALException;
 	List<Encheres> selectByUser(int Utilisateurs) throws DALException;
 	List<Encheres> selectEnchGagne(Categories c) throws DALException;
-	List<Encheres> selectByMotCle(String nomArticle) throws DALException;
 	
 }
 //INSERT CATEGORIES ( libelle) values ('trop bien')

@@ -28,9 +28,9 @@ public class ServletTest extends HttpServlet {
 			UtilisateursManager oui = new UtilisateursManager();
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
 			try {
-				List<Encheres> liste = bonjour.recupererEnCours();
+				List<Encheres> liste = bonjour.recupererMotCle("nomArticle");
 				for (Encheres encheres : liste) {
-					System.out.println(encheres.getPseudoUtilisateur());
+					
 					System.out.println(encheres);
 				}
 				request.setAttribute("listeEnchere", liste);

@@ -29,6 +29,9 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	private final String SELECT_ALL = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait";
 	private final String SELECT_EN_COURS = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where a.date_debut_encheres <= GETDATE() and a.date_fin_encheres >= GETDATE()";
 	private final String SELECT_BY_CATEGORIE = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where c.no_categorie = ?";
+	private final String SELECT_BY_MOT = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where a.nom_article like '%?%'";
+	
+	
 	@Override
 	public Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException {
 		Connection con = null;
@@ -181,8 +184,6 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	@Override
 	public List<Encheres> selectEnCours() throws DALException {
 		List<Encheres> listeEnCours = new ArrayList<Encheres>();
-		
-		
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement stm = con.prepareStatement(SELECT_EN_COURS);
 				ResultSet rs = stm.executeQuery();)
@@ -215,6 +216,28 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	}
 
 	@Override
+	public List<Encheres> selectByMotCle(String nomArticle) throws DALException {
+		List<Encheres> listeByMotCle = new ArrayList<Encheres>();
+		ResultSet rs = null;
+		try (Connection con = ConnectionProvider.getConnection();
+				PreparedStatement stm = con.prepareStatement(SELECT_BY_MOT))
+		{
+			stm.setString(1, nomArticle);
+			rs = stm.executeQuery();
+			while (rs.next()) 
+			{
+				listeByMotCle.add(recupererEnchere(rs));
+			}
+			System.out.println(listeByMotCle);
+		} catch (Exception e) {
+			throw new DALException("Impossible de voir les listes par mot clé !");
+		}
+		
+		return listeByMotCle;
+	}
+
+	
+	@Override
 	public List<Encheres> selectByCategorie(int Categorie) throws DALException {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
 			ResultSet rs = null;
@@ -226,22 +249,13 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			{
 				listeByCategorie.add(recupererEnchere(rs));
 			}
-			
 		} catch (Exception e) {
 			throw new DALException("Impossible de voir les listes par catégorie !");
 		}
-		
-		
 		//peut pas mettre le rs dans le try 
 		return listeByCategorie;
 	}
 
-	@Override
-	public List<Encheres> selectByMotCle(String nomArticle) throws DALException {
-		List<Encheres> listeByMotCle = new ArrayList<Encheres>();
-
-		return listeByMotCle;
-	}
 
 	@Override
 	public List<Categories> selectCategories() throws DALException {

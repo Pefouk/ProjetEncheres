@@ -146,6 +146,19 @@ public class EnchereManager {
 		return listeAll;
 	}
 	
+	public List<Encheres> recupererMotCle(String nomArticle) throws BLLException {
+		List<Encheres> listeMotCle = new ArrayList<Encheres>();
+		try {
+			listeMotCle = this.dao.selectByMotCle(nomArticle);
+		}catch (Exception e) {
+			throw new BLLException(e.getMessage());
+		}
+		return listeMotCle;
+	}
+	
+	
+	
+	
 	
 	public List<Encheres> recupererByCategorie(int noCategorie) throws BLLException {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
