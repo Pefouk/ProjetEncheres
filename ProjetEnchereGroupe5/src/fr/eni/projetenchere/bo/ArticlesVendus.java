@@ -17,6 +17,34 @@ public class ArticlesVendus {
 	private int noUtilisateur;
 	private Categories categorie;
 	private Retraits retrait;
+	private String pseudoUtilisateur;
+
+	/**
+	 * Setter pour retrait
+	 * @param retrait the retrait to set
+	 */
+	public void setRetrait(Retraits retrait) {
+		this.retrait = retrait;
+	}
+
+
+	/**
+	 * Getter pour pseudoUtilisateur.
+	 * @return the pseudoUtilisateur
+	 */
+	public String getPseudoUtilisateur() {
+		return pseudoUtilisateur;
+	}
+
+
+	/**
+	 * Setter pour pseudoUtilisateur
+	 * @param pseudoUtilisateur the pseudoUtilisateur to set
+	 */
+	public void setPseudoUtilisateur(String pseudoUtilisateur) {
+		this.pseudoUtilisateur = pseudoUtilisateur;
+	}
+
 
 	public ArticlesVendus() {
 	}

@@ -129,9 +129,10 @@ public class EnchereManager {
 		List<Encheres> liste = new ArrayList<Encheres>();
 		try {
 			liste = this.dao.selectEnCours();
-		} catch (Exception e) {
-				throw new BLLException(e.getMessage());
+		} catch (Exception e2) {
+				throw new BLLException(e2.getMessage());
 		}
+		
 		return liste;
 	}
 	
@@ -146,10 +147,10 @@ public class EnchereManager {
 	}
 	
 	
-	public List<Encheres> recupererByCategorie() throws BLLException {
+	public List<Encheres> recupererByCategorie(int noCategorie) throws BLLException {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
 		try {
-			listeByCategorie = this.dao.selectByCategorie();
+			listeByCategorie = this.dao.selectByCategorie(noCategorie);
 		} catch (Exception e) {
 				throw new BLLException(e.getMessage());
 		}

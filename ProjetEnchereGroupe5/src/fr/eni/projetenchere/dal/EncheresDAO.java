@@ -17,8 +17,7 @@ public interface EncheresDAO {
 	Encheres selectEnchere(int noArticle)throws DALException;
 	List<Encheres> selectAll() throws DALException;
 	List<Encheres> selectEnCours() throws DALException;
-	List<Encheres> selectByCategorie() throws DALException;
-	//Categorie c dans le selectByCategorie() ?
+	List<Encheres> selectByCategorie(int noCategorie) throws DALException;
  	
 	List<Categories> selectCategories() throws DALException;
 	List<Encheres> selectByUser(int Utilisateurs) throws DALException;

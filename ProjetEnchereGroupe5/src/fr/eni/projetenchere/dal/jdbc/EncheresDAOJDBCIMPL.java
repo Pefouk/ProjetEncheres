@@ -22,13 +22,13 @@ import fr.eni.projetenchere.dal.EncheresDAO;
 
 public class EncheresDAOJDBCIMPL implements EncheresDAO {
 
-	private final String SELECT_ENCHERES = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where ENCHERES.no_article=?";
+	private final String SELECT_ENCHERES = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where e.no_article=?";
 	private final String INSERT_ENCHERES = "INSERT ENCHERES (no_article ,date_enchere, montant_enchere, no_utilisateur) values (?, GETDATE(), ?, ?)";
 	private final String INSERT_ARTICLE = "INSERT ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait) values (?, ?, GETDATE(), ?, ?, ?, ?, ?, ?)";
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
-	private final String SELECT_ALL = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait";
-	private final String SELECT_EN_COURS = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where ARTICLES_VENDUS.date_debut_encheres <= GETDATE() and ARTICLES_VENDUS.date_fin_encheres >= GETDATE()";
-	private final String SELECT_BY_CATEGORIE = "SELECT * FROM ENCHERES inner join ARTICLES_VENDUS on ARTICLES_VENDUS.no_article = ENCHERES.no_article inner join CATEGORIES on CATEGORIES.no_categorie = ARTICLES_VENDUS.no_categorie inner join RETRAITS on RETRAITS.no_retrait = ARTICLES_VENDUS.no_retrait where CATEGORIES.no_categorie = ?";
+	private final String SELECT_ALL = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait";
+	private final String SELECT_EN_COURS = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where a.date_debut_encheres <= GETDATE() and a.date_fin_encheres >= GETDATE()";
+	private final String SELECT_BY_CATEGORIE = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where c.no_categorie = ?";
 	@Override
 	public Encheres createEnchere(Retraits r, ArticlesVendus a, Encheres e, Categories c) throws DALException {
 		Connection con = null;
@@ -164,14 +164,16 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 		a.setNoArticle(rslt.getInt("no_article"));
 		a.setNomArticle(rslt.getString("nom_article"));
 		a.setNoRetrait(r);
-		a.setNoUtilisateur(rslt.getInt("no_utilisateur"));
+		a.setNoUtilisateur(rslt.getInt("vendeur_noutilisateur"));
 		a.setPrixInitial(rslt.getInt("prix_initial"));
 		a.setPrixVente(rslt.getInt("prix_vente"));
+		a.setPseudoUtilisateur(rslt.getString("vendeur_pseudo"));
 		
 		e.setArticle(a);
 		e.setDateEnchere(rslt.getDate("date_enchere"));
 		e.setMontantEnchere(rslt.getInt("montant_enchere"));
-		e.setNoUtilisateur(rslt.getInt(4));
+		e.setNoUtilisateur(rslt.getInt("enchereur_num"));
+		e.setPseudoUtilisateur(rslt.getString("enchereur_pseudo"));
 		
 		return e;
 	}
@@ -213,7 +215,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	}
 
 	@Override
-	public List<Encheres> selectByCategorie() throws DALException {
+	public List<Encheres> selectByCategorie(int Categorie) throws DALException {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
 			ResultSet rs = null;
 		try (Connection con = ConnectionProvider.getConnection();

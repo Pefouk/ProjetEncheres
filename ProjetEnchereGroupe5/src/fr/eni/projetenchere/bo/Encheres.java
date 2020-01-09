@@ -11,11 +11,18 @@ public class Encheres {
 	private int montantEnchere;
 	private ArticlesVendus article;
 	private int noUtilisateur;
+	private String pseudoUtilisateur;
 
-	/**
-	 * @{inheritDoc}
-	 * @see java.lang.Object#toString()
-	 */
+
+
+	public String getPseudoUtilisateur() {
+		return pseudoUtilisateur;
+	}
+
+	public void setPseudoUtilisateur(String pseudoUtilisateur) {
+		this.pseudoUtilisateur = pseudoUtilisateur;
+	}
+
 	@Override
 	public String toString() {
 		return "Encheres [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", article=" + article
@@ -72,6 +79,4 @@ public class Encheres {
 	public void setNoUtilisateur(int noUtilisateur) {
 		this.noUtilisateur = noUtilisateur;
 	}
-	
-
 }
