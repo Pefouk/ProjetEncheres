@@ -3,20 +3,16 @@
 /*Header */
 
 
-.nav-text {
-color: red; }
 
 
 /* Accueil */
-.row {
+header {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-color: #4a47a3;
 	border: 1px solid #ddd;
 	background-color: #4a47a3;
 	border: 1px solid rgba(86, 61, 124, .2);
-	margin-left: 0px;
-	margin-right: 0px;
 }
 
 body {
