@@ -10,7 +10,8 @@
 	crossorigin="anonymous">
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet">
-<link rel="icon" href="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp_400x400.jpg"/>
+<link rel="icon"
+	href="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp_400x400.jpg" />
 <title>Nouvelle vente</title>
 </head>
 <body>
@@ -24,28 +25,30 @@
 
 	</div>
 
-	<form action="<%=request.getContextPath()%>/connecte"
-		method="get">
+	<form action="<%=request.getContextPath()%>/connecte" method="get">
 		<div class="row">
 			<div class="col">
 				<div class="form-check">
-		<label for="filtres">Filtres :</label> <input type="text"
-			name="filtres" id="filtres" /><br> <label for="categorie">Catégories
-			:</label> <select name="categorie">
-			<option value="Toutes" selected>Toutes</option>
-			<option value="Ameublement">Ameublement</option>
-			<option value="Informatique">Informatique</option>
-			<option value="Vetement">Vetement</option>
-			<option value="Sport&Loisir">Sport & Loisir</option>
-		</select><br>
-</div></div></div>
+					<label for="filtres">Filtres :</label> <input type="text"
+						name="filtres" id="filtres" /><br> <label for="categorie">Catégories :</label>
+						<select name="categorie">
+						<option value="Toutes" selected>Toutes</option>
+						<option value="Ameublement">Ameublement</option>
+						<option value="Informatique">Informatique</option>
+						<option value="Vetement">Vetement</option>
+						<option value="Sport&Loisir">Sport & Loisir</option>
+					</select><br>
+				</div>
+			</div>
+		</div>
 
 
 		<div class="row">
 			<div class="col">
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="checkbox" id="gridCheck1" value="achats">
-					<label class="form-check-label" for="gridCheck1">Achats</label>
+					<input class="form-check-input" type="checkbox" id="gridCheck1"
+						value="achats"> <label class="form-check-label"
+						for="gridCheck1">Achats</label>
 				</div>
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="gridRadios"
@@ -68,35 +71,58 @@
 			</div>
 
 			<div class="col-4">
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="gridCheck1" value="ventes">
-						<label class="form-check-label" for="gridCheck1">Mes ventes</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios"
-							id="gridRadios1" value="ventesencours"> <label
-							class="form-check-label" for="gridRadios1"> Mes ventes en cours </label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios"
-							id="gridRadios2" value="ventesnondebutees"> <label
-							class="form-check-label" for="gridRadios2"> Ventes non débutées </label>
-					</div>
-					<div class="form-check disabled">
-						<input class="form-check-input" type="radio" name="gridRadios"
-							id="gridRadios3" value="ventesterminees"> <label
-							class="form-check-label" for="gridRadios3"> Ventes terminées </label>
-					</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="gridCheck1"
+						value="ventes"> <label class="form-check-label"
+						for="gridCheck1">Mes ventes</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="gridRadios"
+						id="gridRadios1" value="ventesencours"> <label
+						class="form-check-label" for="gridRadios1"> Mes ventes en
+						cours </label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="gridRadios"
+						id="gridRadios2" value="ventesnondebutees"> <label
+						class="form-check-label" for="gridRadios2"> Ventes non
+						débutées </label>
+				</div>
+				<div class="form-check disabled">
+					<input class="form-check-input" type="radio" name="gridRadios"
+						id="gridRadios3" value="ventesterminees"> <label
+						class="form-check-label" for="gridRadios3"> Ventes
+						terminées </label>
+				</div>
 			</div>
 			<div class="col">
-			<div class="form-check form-check-inline">
-			<input type="submit" value="Rechercher" />
-			</div>
+				<div class="form-check form-check-inline">
+					<input type="submit" value="Rechercher" />
+				</div>
 			</div>
 		</div>
 
+		<c:forEach items="${listeEnchere}" var="enchere" varStatus="loop">
+			<tr>
+				<div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
+					<a href="${pageContext.request.contextPath} + ${enchere.getArticle().getNoArticle()}" style="display: block; width: 100%; height: 100%;">
+						<td><c:out value="${enchere.getArticle().getNomArticle()}"></c:out>
+							<br></td>
+						<td><c:out value="${enchere.getArticle().getPrixInitial()}"></c:out>
+							<br></td>
+						<td><c:out value="${enchere.getArticle().getFinEncheres()}"></c:out>
+							<br></td>
+						<td><c:out value="${enchere.getPseudoUtilisateur()}"></c:out>
+							<br></td>
+					</a>
+				</div>
 
-		
+
+			</tr>
+		</c:forEach>
+
+
+
 	</form>
 	</main>
 	<footer>

@@ -45,12 +45,11 @@
     <tr>                                     
    <%--<td> ${loop.count} </td>     --%>
  <div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
- <a href="https://google.fr" style="display:block;width:100%;height:100%;">
+ <a href="${pageContext.request.contextPath}/AfficherEnchere?noArticle=${enchere.getArticle().getNoArticle()}" style="display:block;width:100%;height:100%;">
          <td><c:out value="${enchere.getArticle().getNomArticle()}"></c:out> <br></td> 
          <td><c:out value="${enchere.getArticle().getPrixInitial()}"></c:out> <br></td>
          <td><c:out value="${enchere.getArticle().getFinEncheres()}"></c:out> <br></td>
          <td><c:out value="${enchere.getPseudoUtilisateur()}"></c:out> <br></td>
- 
 </a>
 </div>
  
