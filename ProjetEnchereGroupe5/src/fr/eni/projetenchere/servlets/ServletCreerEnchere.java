@@ -27,6 +27,7 @@ public class ServletCreerEnchere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 	/**
@@ -45,11 +46,8 @@ public class ServletCreerEnchere extends HttpServlet {
 					request.getParameter("description"), request.getParameter("categorie"),
 					request.getParameter("miseaprix"), request.getParameter("findate"), request.getParameter("rue"),
 					request.getParameter("codePostal"), request.getParameter("ville"));
-			e = manager.recupererenchere(e.getArticle().getNoArticle());
-			request.setAttribute("enchere", e);
-			response.sendRedirect(request.getContextPath() + "/AfficherEnchere");
+			response.sendRedirect(request.getContextPath() + "/AfficherEnchere?noArticle=" + e.getArticle().getNoArticle());
 		} catch (Exception e2) {
-			e2.printStackTrace();
 			request.setAttribute("erreurCreerEnchere", e2.getMessage());
 			RequestDispatcher rd1 = request.getRequestDispatcher("/WEB-INF/jsp/vendrearticle.jsp");
 			rd1.forward(request, response);

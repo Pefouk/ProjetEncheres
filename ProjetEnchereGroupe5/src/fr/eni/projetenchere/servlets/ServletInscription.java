@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.ant.SessionsTask;
-
 import fr.eni.projetenchere.bll.UtilisateursManager;
 import fr.eni.projetenchere.bo.Utilisateurs;
 
