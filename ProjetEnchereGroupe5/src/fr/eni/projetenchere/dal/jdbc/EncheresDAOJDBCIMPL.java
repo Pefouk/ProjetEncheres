@@ -249,7 +249,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 		} catch (Exception e) {
 			throw new DALException("Impossible de voir les listes par catégorie !");
 		}
-		//peut pas mettre le rs dans le try 
+
 		return listeByCategorie;
 	}
 
