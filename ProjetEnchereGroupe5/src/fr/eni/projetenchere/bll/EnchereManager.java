@@ -162,6 +162,9 @@ public class EnchereManager {
 		List<Encheres> listeByCategorie = new ArrayList<Encheres>();
 
 		try {
+			if (noCategorie ==0) {
+				listeByCategorie = this.dao.selectEnCours();
+			}else 
 			listeByCategorie = this.dao.selectByCategorie(noCategorie);
 		} catch (Exception e) {
 			throw new BLLException(e.getMessage());
