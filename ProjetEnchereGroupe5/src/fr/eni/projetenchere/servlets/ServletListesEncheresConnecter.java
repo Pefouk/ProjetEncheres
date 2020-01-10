@@ -26,11 +26,16 @@ public class ServletListesEncheresConnecter extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EnchereManager enchereManager = new EnchereManager();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listesencheresconnecter.jsp");
+		
 		try {
-			List<Encheres> liste = enchereManager.recupererEnCours();
-			request.setAttribute("listeEnchere", liste);
-			rd.forward(request, response);
-			
+			if (request.getParameter("categorie") != null) {
+				
+				List<Encheres> liste = enchereManager.recupererByCategorie(Integer.valueOf(request.getParameter("categorie")));
+				request.setAttribute("listeEnchere", liste);
+				rd.forward(request, response);
+			}else {
+				throw new Exception("Pas de catégorie !");
+			}
 		}catch (Exception e) {
 			request.setAttribute("erreurListe", e.getMessage());
 			rd.forward(request, response);

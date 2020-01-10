@@ -26,7 +26,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	private final String INSERT_RETRAIT = "INSERT RETRAITS (rue, code_postal, ville) values (?, ?, ?)";
 	private final String SELECT_ALL = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait";
 	private final String SELECT_EN_COURS = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where a.date_debut_encheres <= GETDATE() and a.date_fin_encheres >= GETDATE()";
-	private final String SELECT_BY_CATEGORIE = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where c.no_categorie = ?";
+	private final String SELECT_BY_CATEGORIE = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where c.no_categorie = ? and a.date_debut_encheres <= GETDATE() and a.date_fin_encheres >= GETDATE()";
 	private final String SELECT_BY_MOT = "SELECT e.date_enchere, e.montant_enchere, e.no_article, enchereur.no_utilisateur as enchereur_num, enchereur.pseudo as enchereur_pseudo, a.date_debut_encheres, a.date_fin_encheres, a.description, a.nom_article, a.prix_initial, a.prix_vente, c.no_categorie, c.libelle, r.code_postal, r.no_retrait, r.rue, r.ville, vendeur.no_utilisateur as vendeur_noutilisateur, vendeur.pseudo as vendeur_pseudo FROM ENCHERES as e inner join UTILISATEURS as enchereur on enchereur.no_utilisateur = e.no_utilisateur inner join ARTICLES_VENDUS as a on a.no_article = e.no_article inner join UTILISATEURS as vendeur on a.no_utilisateur = vendeur.no_utilisateur inner join CATEGORIES as c on c.no_categorie = a.no_categorie inner join RETRAITS as r on r.no_retrait = a.no_retrait where a.nom_article like ? and a.date_debut_encheres <= GETDATE() and a.date_fin_encheres >= GETDATE()";
 	
 	
@@ -230,6 +230,13 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			}
 		} catch (Exception e) {
 			throw new DALException("Impossible de voir les listes par mot clé !");
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					throw new DALException("Erreur lors de la fermeture du resultset");				}
+			}
 		}
 		return listeByMotCle;
 	}
@@ -241,6 +248,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement stm = con.prepareStatement(SELECT_BY_CATEGORIE);)
 		{
+			stm.setInt(1, Categorie);
 			rs = stm.executeQuery();
 			while (rs.next())
 			{
@@ -248,6 +256,13 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			}
 		} catch (Exception e) {
 			throw new DALException("Impossible de voir les listes par catégorie !");
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e) {
+					throw new DALException("Erreur lors de la fermeture du resultset");				}
+			}
 		}
 
 		return listeByCategorie;

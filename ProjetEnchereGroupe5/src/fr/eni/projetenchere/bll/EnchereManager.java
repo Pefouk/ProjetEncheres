@@ -164,7 +164,7 @@ public class EnchereManager {
 		try {
 			listeByCategorie = this.dao.selectByCategorie(noCategorie);
 		} catch (Exception e) {
-				throw new BLLException(e.getMessage());
+			throw new BLLException(e.getMessage());
 		}
 		
 		return listeByCategorie;

@@ -33,11 +33,11 @@
 					<label for="filtres">Filtres :</label> <input type="text"
 						name="filtres" id="filtres" /><br> <label for="categorie">Catégories :</label>
 						<select name="categorie">
-						<option value="Toutes" selected>Toutes</option>
-						<option value="Ameublement">Ameublement</option>
-						<option value="Informatique">Informatique</option>
-						<option value="Vetement">Vetement</option>
-						<option value="Sport&Loisir">Sport & Loisir</option>
+						<option value="0" selected>Toutes</option>
+						<option value="1">Informatique</option>
+						<option value="2">Ameublement</option>
+						<option value="3">Vetement</option>
+						<option value="4">Sport & Loisir</option>
 					</select><br>
 				</div>
 			</div>
