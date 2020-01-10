@@ -16,7 +16,7 @@ import fr.eni.projetenchere.bo.Encheres;
 /**
  * Servlet implementation class AccueilServlet
  */
-@WebServlet("/Acceuil")
+@WebServlet("/Accueil")
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,11 +24,10 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EnchereManager manager = new EnchereManager();
+		EnchereManager enchereManager = new EnchereManager();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
 		try {
-			List<Encheres> liste = manager.recupererEnCours();
-			
+			List<Encheres> liste = enchereManager.recupererEnCours();
 			request.setAttribute("listeEnchere", liste);
 			rd.forward(request, response);
 			
