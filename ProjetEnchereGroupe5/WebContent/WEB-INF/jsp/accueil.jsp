@@ -25,7 +25,7 @@
 
 
 </form>
-<form action="<%=request.getContextPath()%>/AccueilServlet" method="post">
+<form action="<%=request.getContextPath()%>/ServletTest" method="get">
 <label for="filtres">Filtres :</label>
 <input type="text" name="filtres" id="filtres"/><br>
 
@@ -35,7 +35,7 @@
     <option value="Ameublement">Ameublement</option>
     <option value="Informatique">Informatique</option>
     <option value="Vetement">Vetement</option>
-    <option value="Sport&Loisir">Sport & Loisir</option>
+    <option value="Sport&Loisir">Sport & Loisirs</option>
 </select>
 <input type="submit" value="Rechercher"/>
 </form>
@@ -43,8 +43,7 @@
 <h2>Listes de toutes les enchères en cours</h2>
 
  <c:forEach items="${listeEnchere}" var="enchere"  varStatus="loop">
-    <tr>                                     
-   <%--<td> ${loop.count} </td>     --%>
+    <tr>                                      
  <div class="offset-lg-4 offset-md-3 col-xs-12 col-lg-4 col-md-6 inscription">
  <a href="${pageContext.request.contextPath}/AfficherEnchere?noArticle=${enchere.getArticle().getNoArticle()}" style="display:block;width:100%;height:100%;">
          <td><c:out value="${enchere.getArticle().getNomArticle()}"></c:out> <br></td> 
@@ -53,8 +52,6 @@
          <td><c:out value="${enchere.getPseudoUtilisateur()}"></c:out> <br></td>
 </a>
 </div>
- 
- 
     </tr>
    </c:forEach>
 </main>

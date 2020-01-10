@@ -226,7 +226,7 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 				PreparedStatement stm = con.prepareStatement(SELECT_BY_MOT);
 				)
 		{
-			stm.setString(1, "%" + nomArticle +"%");
+			stm.setString(1, "%" + nomArticle + "%");
 			rs = stm.executeQuery();
 			if (rs.next()) 
 			{

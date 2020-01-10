@@ -28,7 +28,8 @@ public class ServletTest extends HttpServlet {
 			UtilisateursManager oui = new UtilisateursManager();
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
 			try {
-				List<Encheres> listeMotCle = bonjour.recupererMotCle("%aulas%");
+				List<Encheres> listeMotCle = bonjour.recupererMotCle("%"+request.getParameter("filtres")+"%");
+				
 				for (Encheres encheres : listeMotCle) {
 					
 					System.out.println(encheres);
@@ -40,9 +41,7 @@ public class ServletTest extends HttpServlet {
 				e.printStackTrace();
 			}
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
