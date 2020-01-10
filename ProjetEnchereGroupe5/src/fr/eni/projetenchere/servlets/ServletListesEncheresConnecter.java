@@ -25,15 +25,10 @@ public class ServletListesEncheresConnecter extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		EnchereManager bonjour = new EnchereManager();
-		UtilisateursManager oui = new UtilisateursManager();
+		EnchereManager enchereManager = new EnchereManager();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listesencheresconnecter.jsp");
 		try {
-			List<Encheres> liste = bonjour.recupererEnCours();
-			for (Encheres encheres : liste) {
-				System.out.println(encheres.getPseudoUtilisateur());
-				System.out.println(encheres);
-			}
+			List<Encheres> liste = enchereManager.recupererEnCours();
 			request.setAttribute("listeEnchere", liste);
 			rd.forward(request, response);
 			

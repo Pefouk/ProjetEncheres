@@ -19,21 +19,15 @@ import fr.eni.projetenchere.dal.EncheresDAO;
 /**
  * Servlet implementation class ServletTest
  */
-@WebServlet("/ServletTest")
-public class ServletTest extends HttpServlet {
+@WebServlet("/AfficherMotCle")
+public class ServletAfficherMotCle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			EnchereManager bonjour = new EnchereManager();
-			UtilisateursManager oui = new UtilisateursManager();
+			EnchereManager enchereManager = new EnchereManager();
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
 			try {
-				List<Encheres> listeMotCle = bonjour.recupererMotCle("%"+request.getParameter("filtres")+"%");
-				
-				for (Encheres encheres : listeMotCle) {
-					
-					System.out.println(encheres);
-				}
+				List<Encheres> listeMotCle = enchereManager.recupererMotCle("%"+request.getParameter("filtres")+"%");
 				request.setAttribute("listeEnchere", listeMotCle);
 				rd.forward(request, response);
 				

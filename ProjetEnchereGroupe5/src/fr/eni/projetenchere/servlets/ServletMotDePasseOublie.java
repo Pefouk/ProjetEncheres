@@ -25,7 +25,6 @@ public class ServletMotDePasseOublie extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/oublie.jsp");
-
 		request.setAttribute("erreurVerifCompte", null);
 		rd.forward(request, response);	
 	}

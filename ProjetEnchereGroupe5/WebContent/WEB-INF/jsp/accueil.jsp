@@ -25,7 +25,7 @@
 
 
 </form>
-<form action="<%=request.getContextPath()%>/ServletTest" method="get">
+<form action="<%=request.getContextPath()%>/AfficherMotCle" method="get">
 <label for="filtres">Filtres :</label>
 <input type="text" name="filtres" id="filtres"/><br>
 
