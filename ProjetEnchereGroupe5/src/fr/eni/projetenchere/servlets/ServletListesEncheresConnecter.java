@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.projetenchere.bll.EnchereManager;
-import fr.eni.projetenchere.bll.UtilisateursManager;
 import fr.eni.projetenchere.bo.Encheres;
 
 /**
@@ -33,7 +32,8 @@ public class ServletListesEncheresConnecter extends HttpServlet {
 			rd.forward(request, response);
 			
 		}catch (Exception e) {
-			e.printStackTrace();
+			request.setAttribute("erreurListe", e.getMessage());
+			rd.forward(request, response);
 		}
 }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

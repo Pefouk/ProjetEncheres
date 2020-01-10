@@ -150,9 +150,7 @@ public class EnchereManager {
 		List<Encheres> listeMotCle = new ArrayList<Encheres>();
 		try {
 			listeMotCle = this.dao.selectByMotCle(nomArticle);
-			System.out.println(listeMotCle);
 		}catch (Exception e) {
-			e.printStackTrace();
 			throw new BLLException(e.getMessage());
 		}
 		return listeMotCle;

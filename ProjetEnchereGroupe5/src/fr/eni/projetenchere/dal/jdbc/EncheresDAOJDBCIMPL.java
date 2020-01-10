@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import fr.eni.projetenchere.bo.ArticlesVendus;
 import fr.eni.projetenchere.bo.Categories;
 import fr.eni.projetenchere.bo.Encheres;
@@ -201,7 +199,6 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	@Override
 	public List<Encheres> selectAll() throws DALException {
 		List<Encheres> listeAll = new ArrayList<Encheres>();
-		ArticlesVendus a = new ArticlesVendus();
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement stm = con.prepareStatement(SELECT_ALL);
 				ResultSet rs = stm.executeQuery();)
@@ -220,7 +217,6 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 	public List<Encheres> selectByMotCle(String nomArticle) throws DALException {
 		List<Encheres> listeByMotCle = new ArrayList<Encheres>();
 		ResultSet rs = null;
-		Encheres en = new Encheres();
 		
 		try (Connection con = ConnectionProvider.getConnection();
 				PreparedStatement stm = con.prepareStatement(SELECT_BY_MOT);
@@ -232,7 +228,6 @@ public class EncheresDAOJDBCIMPL implements EncheresDAO {
 			{
 				listeByMotCle.add(recupererEnchere(rs));
 			}
-			System.out.println(listeByMotCle);
 		} catch (Exception e) {
 			throw new DALException("Impossible de voir les listes par mot clé !");
 		}

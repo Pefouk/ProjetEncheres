@@ -26,12 +26,12 @@ public class AccueilServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EnchereManager enchereManager = new EnchereManager();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp");
+		
 		try {
 			List<Encheres> liste = enchereManager.recupererEnCours();
 			request.setAttribute("listeEnchere", liste);
-			rd.forward(request, response);
-			
-		}catch (Exception e) {
+			rd.forward(request, response);			
+		} catch (Exception e) {
 			request.setAttribute("erreur", e.getMessage());
 			rd.forward(request, response);
 		}
